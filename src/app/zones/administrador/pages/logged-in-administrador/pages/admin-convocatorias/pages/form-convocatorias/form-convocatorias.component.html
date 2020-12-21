@@ -1,0 +1,47 @@
+<div
+  fxLayoutAlign="center start"
+  fxLayout="row">
+  <form
+    fxLayoutGap="10px"
+    fxLayout="column"
+    fxLayoutAlign="center start"
+    class="mat-elevation-z2 padding25 general-card-border card-firmas"
+    [formGroup]="form">
+    <h1 class="mat-h1">Subir archivos para las convocatorias</h1>
+    <mat-form-field  appearance="outline">
+      <mat-label>Descripción del archivo</mat-label>
+      <input
+        required
+        matInput
+        type="text"
+        formControlName="descripcion">
+      <mat-error *ngIf="form.get('descripcion').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('descripcion').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <app-upload-multiple-files
+      fxFill
+      (sentIdFiles)="recivedIdFiles($event)"
+      [multiple]="false"
+      [arrIcons]="null"
+      [percentWidth]="94"
+      [formControlFile]="form.get('adjuntos')"
+      [url]="urlToUpload">
+    </app-upload-multiple-files>
+    <div
+      fxFill
+      fxLayout="row"
+      fxLayoutAlign="end center">
+        <button
+          (click)="crearConvocatoria()"
+          [disabled]="form.invalid || (_loading.getHTTPStatus() | async) || idFiles.length === 0"
+          color="accent"
+          mat-button>
+          CREAR CONVOCATORIA
+        </button>
+    </div>
+  </form>
+</div>

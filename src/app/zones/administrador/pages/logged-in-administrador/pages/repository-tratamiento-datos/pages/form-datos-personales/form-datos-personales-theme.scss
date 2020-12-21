@@ -1,0 +1,17 @@
+@import '~@angular/material/theming';
+
+@mixin form-datos-personales-theme($theme) {
+  $foreground: map_get($theme, foreground);
+  $warn: map-get($theme, warn);
+
+
+  .nofilename-formdatos {
+    color: mat-color($foreground, icon);
+  }
+
+  .caption-formdatos {
+        color: mat-color($warn);
+
+  }
+
+}

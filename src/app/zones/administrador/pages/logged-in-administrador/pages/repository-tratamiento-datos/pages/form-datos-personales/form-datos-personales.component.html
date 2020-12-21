@@ -1,0 +1,130 @@
+<div
+  fxLayout="row"
+  fxLayoutAlign="center center">
+  <form
+    [formGroup]="formTratamiento"
+    class="mat-elevation-z2"
+    id="form-container"
+    fxLayout="column">
+    <h2 class="mat-h2">{{ appName }} - Tratamiento de datos personales</h2>
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha</mat-label>
+      <input
+        formControlName="date"
+        matInput
+        placeholder="Fecha"
+        type="text">
+      <mat-error *ngIf="formTratamiento.get('date').hasError('required')"></mat-error>
+    </mat-form-field>
+    <mat-form-field  appearance="outline">
+      <mat-label>Observaciones</mat-label>
+      <textarea
+      formControlName="observation"
+      cdkTextareaAutosize
+      matInput
+      placeholder="Escriba aquí las observaciones">
+    </textarea>
+
+      <mat-error *ngIf="formTratamiento.get('observation').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Escribir las observaciones es obligatorio"
+          [errors]="formTratamiento.get('observation').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field  appearance="outline">
+      <mat-label>Versión</mat-label>
+      <input
+        formControlName="version"
+        matInput
+        placeholder="Escriba aquí la versión"
+        type="text">
+
+      <mat-error *ngIf="formTratamiento.get('version').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Escribir la versión es obligatorio"
+          [errors]="formTratamiento.get('version').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <div fxLayout="column"
+         fxLayoutGap="7px"
+         fxLayoutAlign="start center">
+      <div fxLayout="row"
+           fxLayoutAlign="start center">
+            <div
+              fxLayout="row"
+              fxLayoutAlign="space-between center"
+              class="mat-body-1"
+              *ngIf="file?.files[0]?.name; else cargar">
+              <mat-icon class="caption-formdatos">picture_as_pdf</mat-icon>
+              <span>{{ file.files[0].name }}</span>
+            </div>
+            <ng-template #cargar>
+              <span class="mat-caption nofilename-formdatos">Tamaño máximo 2 MB</span>
+            </ng-template>
+        <ng-container *ngIf="!uploading">
+          <button
+            matTooltip="Validar y subir archivo"
+            [disabled]="fileValid"
+            (click)="validFileAndUpload(file)"
+            color="accent"
+            *ngIf="file?.files[0]?.name"
+            mat-icon-button>
+            <mat-icon>check</mat-icon>
+          </button>
+          <button
+            matTooltip="Eliminar archivo"
+            [disabled]="fileValid"
+            color="warn"
+            (click)="removeFile()"
+            *ngIf="file?.files[0]?.name"
+            mat-icon-button>
+            <mat-icon>clear</mat-icon>
+          </button>
+        </ng-container>
+        <mat-progress-spinner
+          class="spiner"
+          *ngIf="uploading"
+          mode="determinate"
+          [value]="uploader.progress"
+          [diameter]="26">
+        </mat-progress-spinner>
+      </div>
+      <button
+        [disabled]="fileValid"
+        (click)="file.click()"
+        color="accent"
+        mat-raised-button>
+          <mat-icon>cloud_upload</mat-icon> Cargar archivo
+      </button>
+      <input
+        formControlName="file"
+        accept="application/pdf"
+        hidden #file type="file">
+      <mat-error
+        *ngIf="formTratamiento.get('file').status === 'INVALID'"
+        class="mat-caption">
+        <app-form-errors
+          *ngIf="!formTratamiento.get('file').untouched"
+          errorPrefix="Adjuntar un PDF es obligatorio"
+          [errors]="formTratamiento.get('file').errors">
+        </app-form-errors>
+      </mat-error>
+      <re-captcha
+        (resolved)="recaptchaResolved($event)"
+        formControlName="recaptcha">
+      </re-captcha>
+    </div>
+    <div fxLayout="row"
+         fxLayoutAlign="end end">
+        <button
+          [disabled]="formTratamiento.invalid  || !fileValid"
+          (click)="createPolitic()"
+          color="accent"
+          mat-button>
+          GUARDAR
+        </button>
+    </div>
+  </form>
+</div>

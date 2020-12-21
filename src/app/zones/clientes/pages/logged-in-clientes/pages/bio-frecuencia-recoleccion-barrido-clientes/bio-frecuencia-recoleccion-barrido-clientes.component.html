@@ -1,0 +1,81 @@
+<div
+  fxLayoutAlign="center start"
+  fxLayout="row">
+  <form
+    fxLayoutGap="10px"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    class="mat-elevation-z2 padding25 general-card-border"
+    [formGroup]="form">
+    <h1 class="mat-h1">BIO - Frecuencia recolección y barrido</h1>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Código de cliente</mat-label>
+      <mat-select
+        required
+        placeholder="Selecciona un código de cliente"
+        formControlName="codigo_cliente">
+        <mat-option value="">
+          Seleccione una opción
+        </mat-option>
+        <mat-option
+          (click)="tipoSucripcion(option)"
+          *ngFor="let option of tipoSuscripcion$ | async"
+                    [value]="option.code">
+          {{  option.code }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('codigo_cliente').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Seleccionar un tipo de identificación es requerido"
+          [errors]="form.get('codigo_cliente').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Proceso</mat-label>
+      <mat-select
+        required
+        placeholder="Selecciona un tipo de naturaleza"
+        formControlName="proceso">
+        <mat-option value="">
+          Seleccione una opción
+        </mat-option>
+          <mat-option
+            (click)="procesoSelect(option)"
+            *ngFor="let option of procesoSelect$ | async"
+                      [value]="option.id">
+            {{  option.description }}
+          </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('proceso').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Seleccionar un tipo de identificación es requerido"
+          [errors]="form.get('proceso').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <re-captcha
+      (resolved)="recaptchaResolved($event)"
+      formControlName="recaptcha">
+    </re-captcha>
+    <button
+      color="accent"
+      [disabled]="form.invalid || (_loadingService.getHTTPStatus() | async)"
+      (click)="consultar()"
+      mat-raised-button>
+      CONSULTAR
+    </button>
+    <app-bio-frecuencia-recoleccion-barrido-clientes-map-viewer
+      [coords]="coords"
+      fxFill>
+    </app-bio-frecuencia-recoleccion-barrido-clientes-map-viewer>
+    <app-bio-frecuencia-recoleccion-barrido-clientes-datatable
+      fxFill
+      (cordenadas)="recieveCoords($event)"
+      [dataDatable]="dataDatable">
+    </app-bio-frecuencia-recoleccion-barrido-clientes-datatable>
+  </form>
+</div>
+

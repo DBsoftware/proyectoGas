@@ -1,0 +1,126 @@
+<div class="mat-elevation-z2">
+ <div  fxLayout="row" id="search">
+    <button (click)="applyFilter(input.value)" mat-icon-button>
+      <mat-icon class="color-icon">search</mat-icon>
+    </button>
+    <input
+        #input
+        matInput
+        type="search"
+       (keyup)="applyFilter($event.target.value)"
+      placeholder="Buscar proveedores">
+  </div>
+  <mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="companyName">
+      <mat-header-cell
+        fxFlex="30%"
+        *matHeaderCellDef>
+        Razón social
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="30%"
+        *matCellDef="let rowData">
+          {{ rowData.companyName }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="identification">
+      <mat-header-cell
+        fxFlex="12%"
+        mat-header-cell
+        *matHeaderCellDef>
+        NIT
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="12%"
+        *matCellDef="let rowData">
+        {{ rowData.nit }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="names_owner">
+      <mat-header-cell
+        fxFlex="33%"
+        *matHeaderCellDef>
+        Nombre representante
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="33%"
+        *matCellDef="let rowData">
+        <p>{{ rowData.companyUser.name1 }} {{ rowData.companyUser.lastName1 }}</p>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="email_owner">
+      <mat-header-cell
+        fxFlex="33%"
+        *matHeaderCellDef>
+        Correo representante
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="33%"
+        *matCellDef="let rowData">
+            {{ rowData.companyUser.email }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="address">
+      <mat-header-cell
+        fxFlex="33%"
+        *matHeaderCellDef>
+          Dirección
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="33%"
+        *matCellDef="let rowData">
+        <p>{{ rowData.city.description }}, {{ rowData.department.description }}</p>
+      </mat-cell>
+    </ng-container>
+    <ng-container
+      matColumnDef="acciones">
+      <mat-header-cell
+        fxLayout="row"
+        fxLayoutAlign="end center"
+        fxFlex="20%"
+        *matHeaderCellDef>
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="20%"
+        fxLayout="row"
+        fxLayoutAlign="end center"
+          *matCellDef="let rowData">
+          <button
+            matTooltip="Ver registro del usuario"
+            matTooltipPosition="left"
+            (click)="viewPofileData(rowData)"
+            mat-icon-button>
+            <mat-icon
+              class="repository-tratamiento-icon">remove_red_eye</mat-icon>
+          </button>
+          <button
+            *ngIf="rowData?.companyUser.status === 'I'"
+            (click)="sendActivateLink(rowData)"
+            matTooltip="Enviar correo de activacion de cuenta"
+            matTooltipPosition="left"
+            mat-icon-button>
+            <mat-icon class="repository-tratamiento-icon">verified_user</mat-icon>
+          </button>
+        <button
+          (click)="confirmSendPasswordEmail(rowData)"
+          matTooltip="Enviar link para cambiar contraseña"
+          matTooltipPosition="left"
+          mat-icon-button>
+          <mat-icon class="repository-tratamiento-icon">vpn_key</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+  <mat-paginator
+    [pageIndex]="dataSource.indexPage"
+    (page)="paginate($event)"
+    [length]="dataSource.totalItems"
+    [showFirstLastButtons]="true"
+    [pageSize]="dataSource.sizePage"
+    [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
+</div>

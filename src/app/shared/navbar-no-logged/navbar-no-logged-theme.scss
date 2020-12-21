@@ -1,0 +1,20 @@
+@import "~@angular/material/theming";
+
+@mixin navbar-no-logged-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  #nav-no-logged {
+    background-color: mat-color($primary);
+    color: mat-color($background, card);
+    .active-border-navbar {
+      border-bottom: 3px solid mat-color($accent) !important;
+    }
+
+  }
+
+
+  .active-menu-sub-menu {
+    color:  mat-color($accent) !important;
+  }
+}

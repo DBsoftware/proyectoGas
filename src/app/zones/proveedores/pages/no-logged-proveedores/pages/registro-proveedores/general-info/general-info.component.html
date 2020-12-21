@@ -1,0 +1,390 @@
+<form [formGroup]="form">
+  <mat-form-field
+    appearance="outline">
+    <mat-label>Razón Social</mat-label>
+    <input
+      appUppercaseText
+      required
+      type="text"
+      matInput
+      placeholder="Escribe tu razón social"
+      formControlName="razon_social">
+    <mat-error *ngIf="form.get('razon_social').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix="Escribe la razón social"
+        [errors]="form.get('razon_social').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field
+    appearance="outline">
+    <mat-label>Tipo de identificación</mat-label>
+    <mat-select
+      required
+      placeholder="Seleccione un tipo de identificaion"
+      formControlName="tipo_identificacion">
+      <mat-option value="">
+        Seleccione una opción
+      </mat-option>
+      <mat-option
+        (click)="idTypeChange(option)"
+        *ngFor="let option of tipoIdentifacion$ | async"
+                  [value]="option.id">
+        {{  option.description }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('tipo_identificacion').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix="Seleccionar un tipo de identificación es requerido"
+        [errors]="form.get('tipo_identificacion').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <div
+    fxLayout="row"
+    fxLayoutGap="7px">
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Identificación</mat-label>
+      <input
+        appUppercaseText
+        required
+        type="text"
+        matInput
+        placeholder="Escribe tu identificación"
+        formControlName="identificacion_tributaria">
+      <mat-error *ngIf="form.get('identificacion_tributaria').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('identificacion_tributaria').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Digito de verificación</mat-label>
+      <input
+        appUppercaseText
+        required
+        type="text"
+        matInput
+        placeholder="Escribe tu identificación"
+        formControlName="digito_verficacion">
+      <mat-error *ngIf="form.get('digito_verficacion').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('digito_verficacion').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row"
+       fxLayoutGap="6px"
+       fxFill>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Primer nombre representante legal</mat-label>
+      <input
+        appUppercaseText
+        required
+        type="text"
+        matInput
+        placeholder="Primer nombre representante legal"
+        formControlName="representante_legal_nombre">
+      <mat-error *ngIf="form.get('representante_legal_nombre').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('representante_legal_nombre').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Segundo nombre representante legal</mat-label>
+      <input
+        appUppercaseText
+        type="text"
+        matInput
+        placeholder="Escribe el segundo del nombre representante legal"
+        formControlName="representante_legal_nombre2">
+      <mat-error *ngIf="form.get('representante_legal_nombre2').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('representante_legal_nombre2').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div
+    fxLayout="row"
+    fxLayoutGap="6px"
+    fxFill>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Primer apellido representante legal</mat-label>
+      <input
+        appUppercaseText
+        required
+        type="text"
+        matInput
+        placeholder="Escribe el primer apellido representante legal"
+        formControlName="representante_legal_apellido">
+      <mat-error *ngIf="form.get('representante_legal_apellido').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('representante_legal_apellido').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Segundo apellido representante legal</mat-label>
+      <input
+        appUppercaseText
+        type="text"
+        matInput
+        placeholder="Escribe el primer apellido representante legal"
+        formControlName="representante_legal_apellido2">
+      <mat-error *ngIf="form.get('representante_legal_apellido2').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('representante_legal_apellido2').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <mat-form-field
+    appearance="outline">
+    <mat-label>Email</mat-label>
+    <input
+      appUppercaseText
+      required
+      type="email"
+      matInput
+      placeholder="Escribe el email"
+      formControlName="email">
+    <mat-error *ngIf="form.get('email').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix="Escribir el Email es requerido"
+        [errors]="form.get('email').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <div
+    fxLayout="row"
+    fxLayoutGap="7px"
+    fxLayoutAlign="center start">
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Número telefónico</mat-label>
+      <input
+        appUppercaseText
+        required
+        type="number"
+        matInput
+        placeholder="Escriba su número telefónico"
+        formControlName="numero_telefonico">
+      <mat-error *ngIf="form.get('numero_telefonico').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es  requerido"
+          [errors]="form.get('numero_telefonico').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Extensión</mat-label>
+      <input
+        appUppercaseText
+        type="number"
+        matInput
+        placeholder="Escriba la extensión (si aplica)"
+        formControlName="extension">
+      <mat-error *ngIf="form.get('extension').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix=""
+          [errors]="form.get('extension').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div
+    fxLayoutGap="10px"
+    fxLayoutAlign="center center"
+    fxLayout="row">
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Celular</mat-label>
+      <input
+        appUppercaseText
+        type="text"
+        matInput
+        placeholder="Escriba su número celular"
+        formControlName="celular">
+      <mat-error *ngIf="form.get('celular').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es  requerido"
+          [errors]="form.get('celular').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <button
+      #myTooltip="matTooltip"
+      matTooltipPosition="right"
+      matTooltip="Clic aquí para añadir un celular [REQUERIDO]"
+      class="margin-btn-icon"
+      type="button"
+      [disabled]="form.get('celular').value === '' || form.get('celular').value === null"
+      (click)="addTel()"
+      mat-mini-fab>
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <div
+    *ngIf="dataSource.data.length > 0"
+    fxLayout="row"
+    fxLayoutAlign="center center">
+    <table
+      class="materia-border table-container"
+      mat-table
+      [dataSource]="dataSource">
+      <ng-container
+        matColumnDef="celular">
+        <th
+          mat-header-cell
+          *matHeaderCellDef>
+          Celular
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element">
+          {{ element.celular }}
+        </td>
+      </ng-container>
+      <ng-container
+        matColumnDef="acciones">
+        <th
+          mat-header-cell
+          *matHeaderCellDef>
+        </th>
+        <td
+          class="td-icon"
+          mat-cell
+          *matCellDef="let element; let i = index">
+          <button
+            matTooltip="Eliminar celular"
+            type="button"
+            (click)="removeTel(i)"
+            mat-icon-button>
+            <mat-icon class="color-icon">remove_circle</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Departamento</mat-label>
+    <input
+      appUppercaseText
+      required
+      formControlName="departamento"
+      type="text"
+      matInput
+      [matAutocomplete]="departamentoAuto"
+      placeholder="Escribe el daparamento a buscar">
+    <mat-autocomplete
+      (closed)="_autoComplete.compareValueWithSelectionState(form.get('departamento'), form.get('municipio'))"
+      #departamentoAuto="matAutocomplete">
+      <mat-option
+        (onSelectionChange)="_autoComplete.seeSelectionObject(option, 'departamento')"
+        #options
+        *ngFor="let option of filteredState$ | async"
+        [value]="option.description">
+        {{ option.description }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="form.get('departamento').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix="Este campo es requerido"
+        [errors]="form.get('departamento').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field
+    appearance="outline">
+    <mat-label>Municipio</mat-label>
+    <input
+      appUppercaseText
+      required
+      formControlName="municipio"
+      type="text"
+      matInput
+      [matAutocomplete]="municipioAuto"
+      placeholder="Escribe el municipio a buscar">
+    <mat-autocomplete
+      (closed)="_autoComplete.compareValueWithSelection(form.get('municipio'))"
+      #municipioAuto="matAutocomplete">
+      <mat-option
+        (onSelectionChange)="_autoComplete.seeSelectionObject(option, 'municipio')"
+        #options
+        *ngFor="let option of filteredMunicipio$ | async"
+        [value]="option.description">
+        {{ option.description }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="form.get('municipio').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix="Este campo es requerido"
+        [errors]="form.get('municipio').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <div
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    fxLayoutGap="10px">
+  <mat-form-field
+    class="field-address"
+    appearance="outline">
+    <mat-label>Dirección</mat-label>
+    <input
+      appUppercaseText
+      readonly
+      required
+      matInput
+      type="text"
+      placeholder="Escribe tu dirección"
+      formControlName="direccion">
+    <mat-error *ngIf="form.get('direccion').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix="Escribir tu dirección es requerido, da clic en Registrar/Modificar Dirección para añadirla"
+        [errors]="form.get('direccion').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <button
+    class="btn-address"
+    type="button"
+    color="accent"
+    (click)="openColombianNomenclature(this.form.get('direccion'))"
+    mat-button>
+    Registrar / Modificar dirección
+  </button>
+  </div>
+  <div
+    fxFill
+    class="terms-and-conditions"
+    fxLayout="row"
+    fxLayoutAlign="end end">
+    <button
+      color="accent"
+      matStepperNext
+      [disabled]="form.invalid || dataSource.data.length === 0"
+      mat-button>
+      SIGUIENTE
+    </button>
+  </div>
+</form>

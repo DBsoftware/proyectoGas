@@ -1,0 +1,288 @@
+<div fxLayout="row"
+     fxLayoutAlign="center center">
+  <div class="mat-elevation-z2 card-resuelve-deuda general-card-border">
+    <h1 class="mat-h1">Resuelve tu deuda</h1>
+    <form
+      fxLayout="column"
+      fxLayoutAlign="center start"
+      [formGroup]="formResuelveTuDeuda">
+        <mat-form-field
+          appearance="outline">
+          <mat-label>Código Cliente</mat-label>
+          <mat-select
+            required
+            placeholder="Selecciona el código del cliente"
+            formControlName="codigo_cliente">
+            <mat-option value="">
+              Selecciona una opción
+            </mat-option>
+            <mat-option
+              *ngFor="let option of codigoCliente$ | async"
+              [value]="option.code">
+              {{ option.code }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formResuelveTuDeuda.get('codigo_cliente').status === 'INVALID'">
+            <app-form-errors
+              errorPrefix="Seleccionar un código cliente es requerido"
+              [errors]="formResuelveTuDeuda.get('codigo_cliente').errors">
+            </app-form-errors>
+          </mat-error>
+        </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+          <mat-label>Tipo identificación</mat-label>
+          <mat-select
+            required
+            placeholder="Selecciona un tipo de identificación"
+            formControlName="tipo_identificacion">
+            <mat-option value="">
+              Selecciona una opción
+            </mat-option>
+            <mat-option
+              *ngFor="let option of tipoId$ | async"
+              [value]="option.id">
+              {{ option.description }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formResuelveTuDeuda.get('tipo_identificacion').status === 'INVALID'">
+            <app-form-errors
+              errorPrefix="Seleccionar un tipo de identificación es requerido"
+              [errors]="formResuelveTuDeuda.get('tipo_identificacion').errors">
+            </app-form-errors>
+          </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Identificación</mat-label>
+            <input
+              matInput
+              type="number"
+              required
+              placeholder="Escribe tu identificación"
+              formControlName="identificacion">
+        <mat-error *ngIf="formResuelveTuDeuda.get('identificacion').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Escribir una identificación es requerido"
+            [errors]="formResuelveTuDeuda.get('identificacion').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <div
+          fxFill
+          fxLayout="row"
+          fxLayoutGap="12px">
+        <mat-form-field
+          appearance="outline">
+          <mat-label>Primer nombre</mat-label>
+          <input
+            matInput
+            type="text"
+            required
+            placeholder="Escribe tu primer nombre"
+            formControlName="primer_nombre">
+          <mat-error *ngIf="formResuelveTuDeuda.get('primer_nombre').status === 'INVALID'">
+            <app-form-errors
+              errorPrefix="Escribir tu primer nombre es requerido"
+              [errors]="formResuelveTuDeuda.get('primer_nombre').errors">
+            </app-form-errors>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field
+          appearance="outline">
+          <mat-label>Segundo nombre</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="Escribe tu segundo nombre"
+            formControlName="segundo_nombre">
+          <mat-error *ngIf="formResuelveTuDeuda.get('segundo_nombre').status === 'INVALID'">
+            <app-form-errors
+              [errors]="formResuelveTuDeuda.get('segundo_nombre').errors">
+            </app-form-errors>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+          fxFill
+          fxLayout="row"
+          fxLayoutGap="12px">
+        <mat-form-field
+          appearance="outline">
+          <mat-label>Primer apellido</mat-label>
+          <input
+            matInput
+            type="text"
+            required
+            placeholder="Escribe tu primer apellido"
+            formControlName="primer_apellido">
+          <mat-error *ngIf="formResuelveTuDeuda.get('primer_apellido').status === 'INVALID'">
+            <app-form-errors
+              errorPrefix="Escribir tu primer apellido es requerido"
+              [errors]="formResuelveTuDeuda.get('primer_apellido').errors">
+            </app-form-errors>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field
+          appearance="outline">
+          <mat-label>Segundo apellido</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="Escribe tu segundo apellido"
+            formControlName="segundo_apellido">
+          <mat-error *ngIf="formResuelveTuDeuda.get('segundo_apellido').status === 'INVALID'">
+            <app-form-errors
+              [errors]="formResuelveTuDeuda.get('segundo_apellido').errors">
+            </app-form-errors>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          required
+          type="email"
+          placeholder="Escribe tu email"
+          formControlName="email">
+        <mat-error *ngIf="formResuelveTuDeuda.get('email').status === 'INVALID'">
+          <app-form-errors
+            [errors]="formResuelveTuDeuda.get('email').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Edad de mora</mat-label>
+        <input
+          matInput
+          required
+          type="text"
+          placeholder="Escribe tu edad de mora"
+          formControlName="edad_mora">
+        <mat-error *ngIf="formResuelveTuDeuda.get('edad_mora').status === 'INVALID'">
+          <app-form-errors
+            [errors]="formResuelveTuDeuda.get('edad_mora').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Valor adeudado</mat-label>
+        <input
+          matInput
+          required
+          type="text"
+          placeholder="Escribe tu deuda total"
+          formControlName="valor_deuda">
+        <mat-error *ngIf="formResuelveTuDeuda.get('valor_deuda').status === 'INVALID'">
+          <app-form-errors
+            [errors]="formResuelveTuDeuda.get('valor_deuda').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Teléfono</mat-label>
+        <input
+          matInput
+          required
+          type="number"
+          placeholder="Escribe tu teléfono"
+          formControlName="telefono">
+        <mat-error *ngIf="formResuelveTuDeuda.get('telefono').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Escribir tu teléfono es requerido"
+            [errors]="formResuelveTuDeuda.get('telefono').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Celular</mat-label>
+        <input
+          matInput
+          required
+          type="number"
+          placeholder="Escribe tu celular"
+          formControlName="celular">
+        <mat-error *ngIf="formResuelveTuDeuda.get('celular').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Escribir tu celular es requerido"
+            [errors]="formResuelveTuDeuda.get('celular').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Dirección</mat-label>
+        <input
+          matInput
+          required
+          type="text"
+          placeholder="Escribe tu dirección"
+          formControlName="direccion">
+        <mat-error *ngIf="formResuelveTuDeuda.get('direccion').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Escribir tu dirección es requerido"
+            [errors]="formResuelveTuDeuda.get('direccion').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Propuesta para la normalización de la deuda</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          required
+          type="text"
+          placeholder="Escribe detalladamente tu propuesta para normalizar la deuda"
+          formControlName="propuesta">
+        </textarea>
+        <mat-error *ngIf="formResuelveTuDeuda.get('propuesta').status === 'INVALID'">
+          <app-form-errors
+            [errors]="formResuelveTuDeuda.get('propuesta').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <div
+        fxFill
+        fxLayout="column"
+        fxLayoutGap="12px"
+        fxLayoutAlign="center center">
+          <app-autorizacion-tratamiento
+            (sendIdPolitic)="reciveIdPolitic($event)"
+            fxLayout="column"
+            fxLayoutGap="7px"
+            fxLayoutAlign="center center"
+            [control]="formResuelveTuDeuda.get('autorizacion')">
+          </app-autorizacion-tratamiento>
+      </div>
+      <div
+        fxFill
+        fxLayout="row"
+        fxLayoutAlign="center center">
+        <re-captcha
+          class="re-captcha-class"
+          formControlName="recaptcha"
+          (resolved)="recaptchaResolved($event)">
+        </re-captcha>
+      </div>
+      <div
+        fxFill
+        fxLayout="row"
+        fxLayoutAlign="end center">
+          <button mat-raised-button
+                  [disabled]="formResuelveTuDeuda.invalid || formDisable || (_loading.getHTTPStatus() | async)"
+                  (click)="consultar()"
+                  color="accent">
+            {{ textButton }}
+          </button>
+      </div>
+    </form>
+  </div>
+
+</div>

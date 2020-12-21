@@ -1,0 +1,341 @@
+
+<div
+  fxLayoutAlign="center start"
+  fxLayout="row">
+  <form
+    fxLayoutGap="10px"
+    fxLayout="column"
+    fxLayoutAlign="center start"
+    class="mat-elevation-z2 padding25 general-card-border"
+    [formGroup]="form">
+      <h1 class="mat-h1">Ventas - Solicitud  servicio Postventa/Reparación</h1>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Código de suscripción</mat-label>
+      <mat-select
+        required
+        placeholder="Seleccione un código de suscripción"
+        formControlName="codigo_suscription">
+        <mat-option value="">
+          Seleccione una opción
+        </mat-option>
+        <mat-option *ngFor="let option of codigoSuscription$ | async"
+                    [value]="option.code">
+          {{  option.code }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('codigo_suscription').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('codigo_suscription').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Tipo de identificación</mat-label>
+      <mat-select
+        required
+        placeholder="Seleccione un tipo de identificación"
+        formControlName="tipo_identificacion">
+        <mat-option value="">
+          Seleccione una opción
+        </mat-option>
+        <mat-option *ngFor="let option of tipoIdentifacion$ | async"
+                    [value]="option.id">
+          {{  option.description }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('tipo_identificacion').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Seleccionar un tipo de identificación es requerido"
+          [errors]="form.get('tipo_identificacion').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Identificación</mat-label>
+      <input
+        required
+        type="text"
+        matInput
+        placeholder="Escribe la identificación"
+        formControlName="identificacion">
+      <mat-error *ngIf="form.get('identificacion').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('identificacion').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Ciudad</mat-label>
+      <input
+        (blur)="checkInput($event, 'municipio')"
+        formControlName="ciudad"
+        type="text"
+        required
+        matInput
+        [matAutocomplete]="municipioAuto"
+        placeholder="Escriba el municipio">
+      <mat-autocomplete
+        #municipioAuto="matAutocomplete">
+        <mat-option
+          (click)="selectedMunicipio(option)"
+          *ngFor="let option of filteredMunicipio$ | async"
+          [value]="option.description">
+          {{option.description }}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="form.get('ciudad').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('ciudad').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo de servicio requerido</mat-label>
+      <mat-select
+          required
+          placeholder="Seleccione el tipo de uso requerido"
+          formControlName="tipo_servicio"
+          multiple>
+        <mat-select-trigger>
+          <span *ngIf="form.get('tipo_servicio').value?.length >= 1" class="additional-selection">
+          ({{form.get('tipo_servicio').value.length }} {{form.get('tipo_servicio').value.length > 1 ? 'seleccionados' : 'seleccionado'}})
+          </span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let item of listPosventa$ | async" [value]="item.id">{{item.description}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('tipo_servicio').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('tipo_servicio').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Jornada</mat-label>
+      <input
+        required
+        type="text"
+        matInput
+        placeholder="Escribe la jornada"
+        formControlName="jornada">
+      <mat-error *ngIf="form.get('jornada').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('jornada').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Datos adicionales</mat-label>
+      <textarea
+        cdkTextareaAutosize
+        required
+        type="text"
+        matInput
+        placeholder="Escribe los datos adicionales"
+        formControlName="datos_adicionales"></textarea>
+      <mat-error *ngIf="form.get('datos_adicionales').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('datos_adicionales').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Número de contacto persona autorizada</mat-label>
+      <input
+        required
+        type="text"
+        matInput
+        placeholder="Escribe el número de contacto de la persona autorizada"
+        formControlName="numero_persona_auto">
+      <mat-error *ngIf="form.get('numero_persona_auto').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('numero_persona_auto').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Recomendaciones</mat-label>
+      <textarea
+        cdkTextareaAutosize
+        required
+        type="text"
+        matInput
+        placeholder="Escribe las recomendaciones"
+        formControlName="recomendaciones"></textarea>
+      <mat-error *ngIf="form.get('recomendaciones').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('recomendaciones').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <div fxFill
+         fxLayoutGap="6px"
+         fxLayout="row">
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Primer nombre</mat-label>
+        <input
+          required
+          type="text"
+          matInput
+          placeholder="Escribe tu  nombre"
+          formControlName="nombre">
+        <mat-error *ngIf="form.get('nombre').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('nombre').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Segundo nombre</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Escribe tu  nombre"
+          formControlName="nombre2">
+        <mat-error *ngIf="form.get('nombre2').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('nombre2').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div
+      fxFill
+      fxLayout="row"
+      fxLayoutGap="6px">
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Primer apellido</mat-label>
+        <input
+          type="text"
+          matInput
+          required
+          placeholder="Escribe tu  apellido"
+          formControlName="apellido">
+        <mat-error *ngIf="form.get('apellido').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('apellido').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Segundo apellido</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Escribe tu segundo apellido"
+          formControlName="apellido2">
+        <mat-error *ngIf="form.get('apellido2').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('apellido2').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Email</mat-label>
+      <input
+        type="email"
+        matInput
+        required
+        placeholder="Escribe tu email"
+        formControlName="email">
+      <mat-error *ngIf="form.get('email').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('email').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Teléfono fijo</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Escribe tu teléfono fijo"
+        formControlName="telefono">
+      <mat-error *ngIf="form.get('telefono').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('telefono').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Teléfono celular</mat-label>
+      <input
+        type="text"
+        matInput
+        required
+        placeholder="Escribe tu telefono"
+        formControlName="celular">
+      <mat-error *ngIf="form.get('celular').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('celular').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-checkbox
+      formControlName="deseo_recibir">
+      Deseo recibir la notificación al correo electrónico
+    </mat-checkbox>
+    <mat-divider></mat-divider>
+    <div
+      fxFill
+      fxLayout="column"
+      fxLayoutGap="12px"
+      fxLayoutAlign="center center">
+      <app-autorizacion-tratamiento
+        (sendIdPolitic)="reciveIdPolitic($event)"
+        fxLayout="column"
+        fxLayoutGap="7px"
+        fxLayoutAlign="center center"
+        [control]="form.get('autorizacion')">
+      </app-autorizacion-tratamiento>
+      <re-captcha
+        formControlName="recaptcha"
+        (resolved)="recaptchaResolved($event)">
+      </re-captcha>
+    </div>
+    <div
+      fxFill
+      class="terms-and-conditions"
+      fxLayout="row"
+      fxLayoutAlign="end end">
+        <button
+          color="accent"
+          mat-raised-button
+          (click)="guardar()"
+          [disabled]="form.invalid || (_loadingService.getHTTPStatus() | async)"
+          mat-button>
+          {{ textButton }}
+        </button>
+    </div>
+  </form>
+</div>

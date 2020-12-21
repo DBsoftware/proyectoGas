@@ -1,0 +1,24 @@
+#nav-no-logged {
+  padding: 8px 16px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100vw - 32px);
+  z-index: 2;
+
+  .container-nav {
+    position: relative;
+
+    .active-border-navbar {
+      margin-top: 4px;
+    }
+
+
+
+  }
+
+  .img-logo {
+    height: 30px;
+    width: auto;
+  }
+}

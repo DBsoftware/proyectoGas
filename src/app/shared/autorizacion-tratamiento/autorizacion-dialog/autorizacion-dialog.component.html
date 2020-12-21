@@ -1,0 +1,41 @@
+<h3 mat-dialog-title></h3>
+<div mat-dialog-content fxLayout="column">
+  <div id="pdf-object-container"
+       *ngIf="!loadingFile">
+    <object
+      name="pdf"
+      [attr.data]="getPDF()"
+      type="application/pdf"
+      width="100%"
+      height="100%">
+      <p>Este navegador no soporta PDF's haz clic <a [href]="getPDF()">aquí</a>
+        para descargarlo.
+      </p>
+    </object>
+  </div>
+</div>
+<div
+  *ngIf="!loadingFile"
+  fxLayout="row"
+  fxLayoutAlign="space-between center"
+  class="margin-dialog"
+  mat-dialog-actions>
+  <div
+    fxLayout="column"
+    fxLayoutAlign="start center"
+    fxLayoutGap="2px"
+    class="actions-container">
+    <mat-checkbox
+      [formControl]="data.control">
+      Acepto la política de tratamiento de datos personales
+    </mat-checkbox>
+    <small *ngIf="data.control.invalid && data.control.touched">
+      Debes aceptar la política de tratamiento de datos personales para continuar
+    </small>
+  </div>
+  <button
+    (click)="continuar()"
+    mat-button>
+    CONTINUAR
+  </button>
+</div>

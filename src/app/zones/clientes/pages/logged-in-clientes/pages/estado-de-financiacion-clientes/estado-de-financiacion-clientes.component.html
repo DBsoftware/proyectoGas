@@ -1,0 +1,105 @@
+<div fxLayout="row"
+     fxLayoutAlign="center center">
+  <div class="mat-elevation-z2 card-estado-cuenta-financiacion general-card-border">
+    <h1 class="mat-h1">Estado de cuenta financiación</h1>
+    <form
+      fxLayout="column"
+      fxLayoutAlign="center start"
+      [formGroup]="formEstadoDeFinanciacion">
+        <mat-form-field
+          appearance="outline">
+          <input
+            required
+            (dateChange)="formEstadoDeFinanciacion.get('end_at').setValue('')"
+            matInput
+            formControlName="start_at"
+            [matDatepicker]="picker"
+            placeholder="Fecha de inicio de obra">
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker">
+          </mat-datepicker-toggle>
+          <mat-datepicker
+            disabled="false"
+            #picker>
+          </mat-datepicker>
+          <mat-error
+            *ngIf="formEstadoDeFinanciacion.get('start_at').status === 'INVALID'">
+            <app-form-errors
+              errorPrefix="Este campo es requerido"
+              [errors]="formEstadoDeFinanciacion.get('start_at').errors">
+            </app-form-errors>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field
+          appearance="outline">
+          <input
+            required
+            matInput
+            [min]="formEstadoDeFinanciacion.get('start_at').value"
+            formControlName="end_at"
+            [matDatepicker]="picker2"
+            placeholder="Fecha de fin de obra">
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker2">
+          </mat-datepicker-toggle>
+          <mat-datepicker
+            [disabled]="formEstadoDeFinanciacion.get('start_at').value === ''"
+            #picker2>
+          </mat-datepicker>
+          <mat-error
+            *ngIf="formEstadoDeFinanciacion.get('end_at').status === 'INVALID'">
+            <app-form-errors
+              errorPrefix="Este campo es requerido"
+              [errors]="formEstadoDeFinanciacion.get('end_at').errors">
+            </app-form-errors>
+          </mat-error>
+        </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Código Cliente</mat-label>
+        <mat-select
+          required
+          placeholder="Escriba el código del cliente"
+          formControlName="codigo_cliente">
+          <mat-option value="">
+            Seleccione una opción
+          </mat-option>
+          <mat-option
+            *ngFor="let option of tipoSuscripcion$ | async"
+            [value]="option.code">
+            {{ option.code }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formEstadoDeFinanciacion.get('codigo_cliente').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Seleccione un código de cliente"
+            [errors]="formEstadoDeFinanciacion.get('codigo_cliente').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <div
+        fxFill
+        fxLayout="row"
+        fxLayoutAlign="center center">
+        <re-captcha
+          class="re-captcha-class"
+          formControlName="recaptcha"
+          (resolved)="recaptchaResolved($event)">
+        </re-captcha>
+      </div>
+      <div
+        fxFill
+        fxLayout="row"
+        fxLayoutAlign="end center">
+        <button mat-raised-button
+                [disabled]="formEstadoDeFinanciacion.invalid || (_loading.getHTTPStatus() | async)"
+                (click)="consultar()"
+                color="accent">
+          CONSULTAR
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

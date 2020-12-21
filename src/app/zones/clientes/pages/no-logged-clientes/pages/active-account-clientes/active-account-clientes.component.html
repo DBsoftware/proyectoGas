@@ -1,0 +1,76 @@
+<div fxLayout="row" fxLayoutAlign="center center" style="height: 100vh">
+  <form (ngSubmit)="submit()"
+        id="change-password-form"
+        fxLayout="column"
+        [formGroup]="activeFormAccount"
+        class="mat-elevation-z2">
+    <!-- <mat-progress-bar *ngIf="flagDisableForm" class="progress-bar" mode="indeterminate"></mat-progress-bar> -->
+      <img  src="{{ logo }}">
+    <h1 class="mat-headline">Crear contraseña</h1>
+    <small>La contraseña debe cumplir con los siguientes requisitos:</small>
+    <li><small>Al menos 8 caracteres de largo</small></li>
+    <li><small>Letras en mayúsculas</small></li>
+    <li><small>Letras en minúsculas</small></li>
+    <li><small>Caracteres especiales, Ej: @, #, &</small></li>
+
+    <mat-form-field appearance="outline" class="field-form-change-password">
+      <mat-label>Nueva contraseña</mat-label>
+      <input formControlName="password"
+             autocomplete="new-password"
+             matInput
+             placeholder="Introduce tu nueva contraseña"
+             required
+             [type]="hide ? 'password' : 'text'">
+      <mat-icon
+        matSuffix
+        (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility' }}
+      </mat-icon>
+      <mat-error *ngIf="activeFormAccount.get('password').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Escribir la nueva contraseña es obligatorio"
+          [errors]="activeFormAccount.get('password').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline"  class="field-form-change-password">
+      <mat-label>Repite la contraseña</mat-label>
+      <input
+        formControlName="renterPassword"
+        autocomplete="new-password"
+        matInput placeholder="Repite de nuevo la contraseña"
+        required
+        [type]="hide ? 'password' : 'text'">
+      <mat-icon
+        matSuffix
+        (click)="hide = !hide">
+        {{ hide ? 'visibility_off' : 'visibility' }}
+      </mat-icon>
+      <mat-error *ngIf="activeFormAccount.get('renterPassword').status === 'INVALID'">
+        <app-form-errors
+          [errors]="activeFormAccount.get('renterPassword').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <div fxLayout="row"
+         fxLayoutAlign="center center">
+      <re-captcha formControlName="recaptcha"></re-captcha>
+      <mat-error
+        class="mat-caption"
+        *ngIf="activeFormAccount.get('recaptcha').status === 'INVALID'">
+        <app-form-errors
+          *ngIf="!activeFormAccount.get('recaptcha').untouched"
+          errorPrefix="Resolver el re-captcha es obligatorio"
+          [errors]="activeFormAccount.get('recaptcha').errors">
+        </app-form-errors>
+      </mat-error>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="end end">
+      <button mat-raised-button
+              color="accent"
+              [disabled]="activeFormAccount.invalid"
+              type="submit">
+        ESTABLECER CONTRASEÑA
+      </button>
+    </div>
+  </form>
+</div>

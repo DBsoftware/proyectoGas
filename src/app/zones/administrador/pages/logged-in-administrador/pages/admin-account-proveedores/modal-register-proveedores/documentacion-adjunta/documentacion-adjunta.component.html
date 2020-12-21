@@ -1,0 +1,22 @@
+<mat-list
+  fxFill
+  class="materia-border-radius">
+  <h3 mat-subheader>Descargar formularios</h3>
+  <mat-divider class="margin-divider"></mat-divider>
+  <ng-container
+    *ngFor="let item of fileList; let last = last">
+    <mat-list-item>
+      <mat-icon
+        color="warn"
+        mat-list-icon>
+        picture_as_pdf
+      </mat-icon>
+      <a class="a-download" (click)="viewPDF(item)">
+        {{ item.description }}
+      </a>
+    </mat-list-item>
+    <mat-divider
+      *ngIf="!last">
+    </mat-divider>
+  </ng-container>
+</mat-list>

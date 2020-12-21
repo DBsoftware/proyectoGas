@@ -1,0 +1,333 @@
+
+<div fxLayout="row"
+     class="registrer-container"
+      fxLayoutAlign="center stretch">
+  <div class="mat-elevation-z2 card-registrer general-card-border">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <img class="registrer-logo" src="{{ logo }}">
+        </div>
+             <h1 class="mat-h1">Registro de cuenta clientes</h1>
+              <form
+                fxLayout="column"
+                [formGroup]="registrerForm">
+                  <mat-form-field
+                    appearance="outline">
+                    <mat-label>Tipo de identificación</mat-label>
+                    <mat-select
+                      required
+                      placeholder="Tipo de identificación"
+                      formControlName="tipo_identificacion">
+                      <mat-option value="">
+                        Seleccione una opción
+                      </mat-option>
+                      <mat-option *ngFor="let item of tipo_id$ | async" [value]="item.id">
+                        {{ item.description }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="registrerForm.get('tipo_identificacion').status === 'INVALID'">
+                      <app-form-errors
+                        errorPrefix="Debe seleccionar un tipo de Identificación"
+                        [errors]="registrerForm.get('tipo_identificacion').errors">
+                      </app-form-errors>
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field
+                    appearance="outline">
+                    <mat-label>Identificación</mat-label>
+                    <input
+                      formControlName="identificacion"
+                      type="text"
+                      matInput
+                      required
+                      placeholder="Identificación">
+                    <mat-error *ngIf="registrerForm.get('identificacion').status === 'INVALID'">
+                      <app-form-errors
+                        errorPrefix="Este campo es requerido"
+                        [errors]="registrerForm.get('identificacion').errors">
+                      </app-form-errors>
+                    </mat-error>
+                  </mat-form-field>
+                <div
+                  fxLayout="row"
+                  fxLayoutAlign="center stretch"
+                  fxLayoutGap="10px">
+                  <mat-form-field
+                    class="width-field"
+                    appearance="outline">
+                    <mat-label>Primer Nombre</mat-label>
+                    <input
+                      type="text"
+                      matInput
+                      placeholder="Escribe tu primer nombre"
+                      formControlName="nombre1"
+                      required>
+                    <mat-error *ngIf="registrerForm.get('nombre1').status === 'INVALID'">
+                      <app-form-errors
+                        errorPrefix="Este campo es requerido"
+                        [errors]="registrerForm.get('nombre1').errors">
+                      </app-form-errors>
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field
+                    class="width-field"
+                    appearance="outline">
+                    <mat-label>Segundo Nombre</mat-label>
+                    <input
+                      type="text"
+                      matInput
+                      placeholder="Escribe tu segundo nombre"
+                      formControlName="nombre2">
+                    <mat-error *ngIf="registrerForm.get('nombre2').status === 'INVALID'">
+                      <app-form-errors
+                        errorPrefix="Este campo es requerido"
+                        [errors]="registrerForm.get('nombre2').errors">
+                      </app-form-errors>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div
+                  fxLayout="row"
+                  fxLayoutAlign="center stretch"
+                  fxLayoutGap="10px">
+                  <mat-form-field
+                    class="width-field"
+                    appearance="outline">
+                    <mat-label>Primer apellido</mat-label>
+                    <input
+                      type="text"
+                      matInput
+                      placeholder="Escribe tu primer apellido"
+                      formControlName="apellido1"
+                      required>
+                    <mat-error *ngIf="registrerForm.get('apellido1').status === 'INVALID'">
+                      <app-form-errors
+                        errorPrefix="Este campo es requerido"
+                        [errors]="registrerForm.get('apellido1').errors">
+                      </app-form-errors>
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field
+                    class="width-field"
+                    appearance="outline">
+                    <mat-label>Segundo apellido</mat-label>
+                    <input
+                      type="text"
+                      matInput
+                      placeholder="Escribe tu segundo apellido"
+                      formControlName="apellido2">
+                    <mat-error *ngIf="registrerForm.get('apellido2').status === 'INVALID'">
+                      <app-form-errors
+                        errorPrefix="Este campo es requerido"
+                        [errors]="registrerForm.get('apellido2').errors">
+                      </app-form-errors>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <mat-form-field
+                  appearance="outline">
+                  <mat-label>Número telefónico</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    placeholder="Número telefónico"
+                    formControlName="phone"
+                    required>
+                  <mat-error
+                    *ngIf="registrerForm.get('phone').status === 'INVALID'">
+                    <app-form-errors
+                      errorPrefix="Este campo es requerido"
+                      [errors]="registrerForm.get('phone').errors">
+                    </app-form-errors>
+                  </mat-error>
+                </mat-form-field>
+                  <mat-form-field
+                    appearance="outline">
+                    <mat-label>Correo electrónico</mat-label>
+                    <input
+                      type="email"
+                      matInput
+                      placeholder="Email"
+                      formControlName="email"
+                      required>
+                    <mat-error *ngIf="registrerForm.get('email').status === 'INVALID'">
+                      <app-form-errors
+                        errorPrefix="Este campo es requerido"
+                        [errors]="registrerForm.get('email').errors">
+                      </app-form-errors>
+                    </mat-error>
+                  </mat-form-field>
+                  <div
+                    fxLayout="row"
+                    fxFlexAlign="start center"
+                    fxLayoutGap="7px">
+                    <mat-form-field
+                      appearance="outline">
+                      <mat-label>Relación con la propiedad</mat-label>
+                      <mat-select
+                        placeholder="Relación con la propiedad"
+                        [formControl]="registrerForm.get('add_code').get('relacion_propiedad')">
+                        <mat-option value="">
+                          Seleccione una opción
+                        </mat-option>
+                        <mat-option *ngFor="let option of relacion_propiedad$ | async" [value]="option.relationshipPropertyId">
+                          {{ option.description }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="registrerForm.get('add_code').get('relacion_propiedad').status === 'INVALID'">
+                        <app-form-errors
+                          errorPrefix="Este desplegable es requerido"
+                          [errors]="registrerForm.get('add_code').get('relacion_propiedad').errors">
+                        </app-form-errors>
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                      appearance="outline">
+                      <mat-label>Código del cliente / Referencia pago</mat-label>
+                      <input
+                        type="text"
+                        matInput
+                        placeholder="Código del cliente / Referencia pago"
+                        [formControl]="registrerForm.get('add_code').get('codigo_del_cliente')">
+                      <mat-error *ngIf="registrerForm.get('add_code').get('codigo_del_cliente').status === 'INVALID'">
+                        <app-form-errors
+                          errorPrefix="Este campo es requerido"
+                          [errors]="registrerForm.get('add_code').get('codigo_del_cliente').errors">
+                        </app-form-errors>
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field
+                      appearance="outline">
+                      <mat-label>Dirección del predio</mat-label>
+                      <input
+                        matInput
+                        placeholder="Direción del Predio"
+                        [formControl]="registrerForm.get('add_code').get('direccion_predio')">
+                      <mat-error *ngIf="registrerForm.get('add_code').get('direccion_predio').status === 'INVALID'">
+                        <app-form-errors
+                          errorPrefix="Este campo es requerido"
+                          [errors]="registrerForm.get('add_code').get('direccion_predio').errors">
+                        </app-form-errors>
+                      </mat-error>
+                    </mat-form-field>
+                    <button
+                      #myTooltip="matTooltip"
+                      matTooltipPosition="right"
+                      matTooltip="Clic aquí para añadir el código del cliente"
+                      class="margin-btn-icon"
+                      type="button"
+                      [disabled]="registrerForm.get('add_code').get('relacion_propiedad').value === '' || registrerForm.get('add_code').get('codigo_del_cliente').value === '' || registrerForm.get('add_code').get('direccion_predio').value === ''"
+                      (click)="addCode()"
+                     mat-icon-button>
+                      <mat-icon>add</mat-icon>
+                    </button>
+                  </div>
+                <div
+                  fxFill
+                  class="materia-border table-container">
+                  <table
+                    fxFill
+                    mat-table
+                    [dataSource]="dataSource">
+                    <ng-container
+                      matColumnDef="relacion">
+                      <th mat-header-cell
+                          *matHeaderCellDef>
+                        Relación propiedad
+                      </th>
+                      <td
+                        mat-cell
+                        *matCellDef="let element">
+                        {{ element.relationshipPropertyId }}
+                      </td>
+                    </ng-container>
+                    <ng-container
+                      matColumnDef="codigo">
+                      <th
+                        mat-header-cell
+                        *matHeaderCellDef>
+                        Código
+                      </th>
+                      <td
+                        mat-cell
+                        *matCellDef="let element">
+                        {{ element.code }}
+                      </td>
+                    </ng-container>
+                    <ng-container
+                      matColumnDef="direccion">
+                      <th
+                        mat-header-cell
+                        *matHeaderCellDef>
+                        Dirección
+                      </th>
+                      <td
+                        mat-cell
+                        *matCellDef="let element">
+                        {{ element.address }}
+                      </td>
+                    </ng-container>
+                    <ng-container
+                      matColumnDef="acciones">
+                      <th
+                        mat-header-cell
+                        *matHeaderCellDef>
+                      </th>
+                      <td
+                        fxFill
+                        fxLayoutAlign="end center"
+                        mat-cell
+                        *matCellDef="let element; let i = index">
+                        <button
+                          matTooltip="Eliminar item"
+                          type="button"
+                          (click)="removeRow(i)"
+                          mat-icon-button>
+                          <mat-icon class="color-icon">remove_circle</mat-icon>
+                        </button>
+                      </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+                </div>
+              </form>
+              <form
+                  fxLayout="column"
+                  fxLayoutGap="12px"
+                  fxLayoutAlign="center center"
+                  [formGroup]="autorizacionForm">
+                <app-autorizacion-tratamiento
+                  (sendIdPolitic)="reciveIdPolitic($event)"
+                  fxLayout="column"
+                  fxLayoutGap="7px"
+                  fxLayoutAlign="center center"
+                  [control]="autorizacionForm.get('autorizacion_personal_data')">
+                </app-autorizacion-tratamiento>
+                <re-captcha
+                  (resolved)="recaptchaResolved($event)"
+                  formControlName="recaptcha">
+                </re-captcha>
+              </form>
+          <div
+            class="terms-and-conditions"
+            fxLayout="row"
+            fxLayoutAlign="space-between end">
+            <button
+              (click)="goBack()"
+              color="accent"
+              [disabled]="(_loadingService.getHTTPStatus() | async)"
+              mat-button>
+              Prefiero iniciar sesión
+            </button>
+              <button
+                color="accent"
+                mat-raised-button
+                (click)="registrerUser()"
+                [disabled]="autorizacionForm.invalid || registrerForm.invalid || (_loadingService.getHTTPStatus() | async) || dataSource.data.length === 0"
+                mat-button>
+                {{ textButtonRegistrer }}
+              </button>
+          </div>
+    </div>
+</div>
+

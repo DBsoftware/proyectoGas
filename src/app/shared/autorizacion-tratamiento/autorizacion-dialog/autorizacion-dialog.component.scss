@@ -1,0 +1,36 @@
+#pdf-object-container {
+  min-width: 100%;
+  height: 600px;
+
+
+}
+.margin-dialog {
+ margin-top: 10px;
+  margin-bottom: -15px;
+}
+
+.actions-container {
+  position: relative;
+  small {
+    position: absolute;
+    bottom: -15px;
+    color: red;
+    left: -1px;
+    min-width: 450px;
+    animation: slide-down 0.4s ease;
+  }
+}
+
+@keyframes slide-down {
+  0% { // animacion desde
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  100% { // animacion hasta
+    opacity: 1;
+    transform: translateY(0);
+
+  }
+}
+
+

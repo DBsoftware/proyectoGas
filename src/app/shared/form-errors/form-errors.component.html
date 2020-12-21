@@ -1,0 +1,44 @@
+
+<ng-container *ngIf="errors && errors['required']"><span>{{ errorPrefix }} </span></ng-container>
+<ng-container *ngIf="errors['pattern']">
+  <ng-container *ngIf="compareRegex(errors['pattern'].requiredPattern, passwordPattern)">
+    <span>La contraseña debe tener al menos <strong>8</strong> carácteres de <strong>largo</strong>, </span>
+    <span>letras en <strong>mayúsculas, </strong></span>
+    <span>letras en <strong>minúsculas, </strong></span>
+    <span>números</span>
+    <span> y carácteres <strong>especiales</strong></span>
+  </ng-container>
+  <ng-container *ngIf="compareRegex(errors['pattern'].requiredPattern, numberPattern)">
+      Este campo solo admite números
+  </ng-container>
+  <ng-container *ngIf="compareRegex(errors['pattern'].requiredPattern, emailPattern)">
+    El valor ingresado no es válido como correo electrónico
+  </ng-container>
+  <ng-container *ngIf="compareRegex(errors['pattern'].requiredPattern, alphaNumeric)">
+    El campo solo permite valores Alfanuméricos
+  </ng-container>
+  <ng-container *ngIf="compareRegex(errors['pattern'].requiredPattern, alfaNumericWithPuntuaction)">
+    El campo solo permite valores Alfanuméricos signos de puntuación o acentos
+  </ng-container>
+  <ng-container *ngIf="compareRegex(errors['pattern'].requiredPattern, alphabeticPattern)">
+    El campo solo permite valores Alfabéticos
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="errors && errors['notEquivalent']">
+  Los campos <strong>no coinciden</strong>
+</ng-container>
+<ng-container *ngIf="errors && errors['minlength']">
+  Debes escribir mínimo <strong>3</strong> letras
+</ng-container>
+<ng-container *ngIf="errors && errors['maxlength']">
+  El número máximo de cáracteres permitidos es <strong>{{ errors['maxlength'].requiredLength }}</strong>
+</ng-container>
+<ng-container *ngIf="errors && errors['requireMatchAutoComplete']">
+  Debes seleccionar un elemento
+</ng-container>
+<ng-container *ngIf="errors && errors['max']">
+  El número máximo de carácteres permitidos es {{ errors['max'].max }}
+</ng-container>
+<ng-container *ngIf="errors && errors['min']">
+  El número mínimo permitido es {{ errors['min'].min }}
+</ng-container>

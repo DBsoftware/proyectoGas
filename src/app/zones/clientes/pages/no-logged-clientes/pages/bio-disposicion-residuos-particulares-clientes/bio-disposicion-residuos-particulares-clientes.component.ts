@@ -1,0 +1,123 @@
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {MatDialog} from '@angular/material';
+import {SelectsService} from '../../../../../../services/selects/selects.service';
+import {CurrentPoliticService} from '../../../../../../services/current-politic/current-politic.service';
+import {LoadingService} from '../../../../../../services/loading/loading.service';
+import {AppConfig} from '../../../../../../config/app-config';
+import {ConfigAdmin} from '../../../../../administrador/config/config-admin';
+import {RegularExpressions} from '../../../../../../class/regular-expressions';
+import {PdfViewerComponent} from '../../../../../../shared/pdf-viewer/pdf-viewer.component';
+import {DialogConfirmComponent} from '../../../../../../shared/dialog-confim/dialog-confirm.component';
+import {TipoNaturaleza} from '../../../../../../interfaces/tipo-naturaleza';
+import {DisposicionFinalResiduos} from '../../../../../../interfaces/forms/disposicion-final-residuos';
+import {DispocisionService} from '../../../../services/no-logged/dispocision-final-residuos/dispocision.service';
+import {SuccessDialogComponent} from '../../../../../../shared/success-dialog/success-dialog.component';
+
+@Component({
+  selector: 'app-bio-disposicion-residuos-particulares-clientes',
+  templateUrl: './bio-disposicion-residuos-particulares-clientes.component.html',
+  styleUrls: ['./bio-disposicion-residuos-particulares-clientes.component.scss']
+})
+export class BioDisposicionResiduosParticularesClientesComponent implements OnInit {
+  @ViewChild(FormGroupDirective) myNgForm: FormGroupDirective;
+  form: FormGroup;
+  tipoNaturaleza$: Observable<TipoNaturaleza[]>;
+  idPolitic: number;
+  idFilePolitic: number;
+  urlToUpload = `${ AppConfig.API_DOMAIN }:${ AppConfig.PORT }${ AppConfig.API_PREFIX }${ AppConfig.GLOBAL_PREFIX }company/${ AppConfig.COMPANY_ID }/file/asresource`;
+  textButton = 'GUARDAR';
+  recaptcha: string;
+  reciveIdFiles = [];
+  constructor(private fb: FormBuilder,
+              private dialog: MatDialog,
+              private _selects: SelectsService,
+              private _dispocision: DispocisionService,
+              private _currentPolitic: CurrentPoliticService,
+              public _loadingService: LoadingService) { }
+  ngOnInit() {
+    this.createForm();
+    this.tipoNaturaleza$ = this._selects.getTipoNaturaleza();
+  }
+  createForm() {
+    this.form = this.fb.group({
+      tipo_naturaleza: ['', [Validators.required]],
+      identificacion: ['', [Validators.required, Validators.pattern(RegularExpressions.ALPHA_NUMERIC_REGEX)]],
+      nombre: ['', [Validators.required, Validators.pattern(RegularExpressions.ALPHABETIC_SPANISH_REGEX)]],
+      nombre2: ['', [Validators.pattern(RegularExpressions.ALPHABETIC_SPANISH_REGEX)]],
+      apellido: ['', [Validators.required, Validators.pattern(RegularExpressions.ALPHABETIC_SPANISH_REGEX)]],
+      apellido2: ['', [Validators.pattern(RegularExpressions.ALPHABETIC_SPANISH_REGEX)]],
+      email: ['', [Validators.required, Validators.pattern(RegularExpressions.EMAIL_REGEX)]],
+      telefono: ['', [Validators.required, Validators.pattern(RegularExpressions.NUMBER_REGEX)]],
+      celular: ['', [Validators.required, Validators.pattern(RegularExpressions.NUMBER_REGEX)]],
+      deseo_recibir: ['', []],
+      informacion_adicional: ['', [Validators.required, Validators.pattern(RegularExpressions.ALPHA_NUMERIC_REGEX)]],
+      adjuntos: ['', []],
+      autorizacion: ['', [Validators.requiredTrue]],
+      recaptcha: ['', [Validators.required]]
+    });
+  }
+  reciveFiles(event) {
+    this.reciveIdFiles = event;
+  }
+  reciveIdPolitic(event) {
+    this.idPolitic = event;
+  }
+  recaptchaResolved(event) {
+    this.recaptcha = event;
+  }
+  guardar() {
+    this.dialog.open(DialogConfirmComponent,
+      {
+        data: {
+          title: 'Confirmar transacción',
+          content: '¿Confirma la creación de la petición?'
+        }
+      })
+      .afterClosed()
+      .subscribe(result => {
+        if (result && this.form.valid) {
+                   const form: DisposicionFinalResiduos = {
+                      formId: 13,
+                      typeNatureId: this.form.get('tipo_naturaleza').value,
+                      identification: this.form.get('identificacion').value.toString(),
+                      name1: this.form.get('nombre').value,
+                      name2: this.form.get('nombre2').value,
+                      lastName1: this.form.get('apellido').value,
+                      lastName2: this.form.get('apellido2').value,
+                      email: this.form.get('email').value,
+                      mobile: this.form.get('celular').value.toString(),
+                      phoneNumber: this.form.get('telefono').value.toString(),
+                      sendEmailNotification: this.form.get('deseo_recibir').value,
+                      aditionalInfo: this.form.get('informacion_adicional').value,
+                      politicId: this.idPolitic,
+                      filesId: this.reciveIdFiles,
+                      recaptchaToken: this.recaptcha
+                    };
+          this.textButton = 'GUARDANDO...';
+          this.form.disable();
+           this._dispocision.setDisposicion(form)
+                 .subscribe(data => {
+                   this.succesDialog(data.body.message);
+                   this.myNgForm.resetForm();
+                   this.form.enable();
+                   this.textButton = 'GUARDAR';
+                   console.log(data);
+                 }, err => {
+                   this.form.enable();
+                   this.textButton = 'GUARDAR';
+                 });
+        }
+      });
+  }
+
+  succesDialog(message: string) {
+    return this.dialog.open(SuccessDialogComponent, {
+      data: {
+        message: message,
+      }
+    });
+  }
+
+}

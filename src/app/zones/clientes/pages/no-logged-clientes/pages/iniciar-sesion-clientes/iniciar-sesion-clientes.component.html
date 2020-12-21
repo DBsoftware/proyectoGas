@@ -1,0 +1,89 @@
+<div
+  class="login-container vh-cien-calc"
+  fxLayout="row"
+  fxLayoutAlign="center center">
+  <mat-card>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <img class="login-logo" src="{{ logo }}">
+    </div>
+    <mat-card-title>
+    <span id="login-title">Iniciar sesión<br>
+      <small class="aux-text">Ir a la plataforma</small>
+    </span>
+    </mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="loginForm"
+            autocomplete="off"
+            fxLayoutAlign="center center"
+            fxLayout="column"
+            novalidate>
+        <mat-form-field appearance="outline">
+          <mat-label>Correo electrónico</mat-label>
+          <input  autocomplete="off"
+                  type="email"
+                  formControlName="email"
+                  matInput
+                  placeholder="Correo electrónico"
+                  required>
+          <mat-error
+            *ngIf="loginForm.get('email').status === 'INVALID'">
+            <app-form-errors errorPrefix="Este campo es requerido"
+                             [errors]="loginForm.get('email').errors">
+            </app-form-errors>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <!--(keyup.enter)="attemptDoLogin()-->
+          <input
+            autocomplete="off"
+            formControlName="contrasena"
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            placeholder="Contraseña"
+            required>
+          <mat-icon
+            matSuffix
+            (click)="hide = !hide">
+            {{hide ? 'visibility_off' : 'visibility'}}
+          </mat-icon>
+          <mat-error
+            *ngIf="loginForm.get('contrasena').status === 'INVALID'">
+            <app-form-errors errorPrefix="Este campo es requerido"
+                             [errors]="loginForm.get('contrasena').errors">
+            </app-form-errors>
+          </mat-error>
+        </mat-form-field>
+        <re-captcha formControlName="recaptcha"></re-captcha>
+      </form>
+      <button
+        (click)="gotoResetPassword()"
+        mat-button
+        class="btn-forget-password"
+        color="accent">
+        ¿ Has olvidado tu contraseña ?
+      </button>
+    </mat-card-content>
+    <p class="aux-text">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </p>
+    <mat-card-content
+      fxLayout="row"
+      fxLayoutAlign="space-between center">
+      <button
+        (click)="goToRegistrer()"
+        mat-button
+        color="accent">
+        Crear cuenta
+      </button>
+      <button
+        [disabled]="loginForm.invalid || ( _loading.getHTTPStatus() | async)"
+        (click)="doLogin()"
+        mat-raised-button
+        color="accent">
+        SIGUIENTE
+      </button>
+    </mat-card-content>
+  </mat-card>
+</div>

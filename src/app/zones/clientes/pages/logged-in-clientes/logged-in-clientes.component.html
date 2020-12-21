@@ -1,0 +1,29 @@
+<mat-sidenav-container>
+  <mat-sidenav
+    #sidenav
+    [fixedInViewport]="sidenavoptions.fixed"
+    [mode]="sidenavoptions.modenavbar">
+    <app-menu
+      [zoneId]="zoneId"
+      [inicioRoute]="initRoute"
+      [sideNav]="sidenav">
+    </app-menu>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div id="nav-wrap">
+      <app-header
+        [companyName]="companyName"
+        [urlModule]="url"
+        [sideNav]="sidenav">
+      </app-header>
+      <app-breadcrumb
+        [sideNav]="sidenav">
+      </app-breadcrumb>
+    </div>
+
+    <div fxLayout="column" class="min-height-100">
+      <div fxFlex id="content-wrap">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </mat-sidenav-content>

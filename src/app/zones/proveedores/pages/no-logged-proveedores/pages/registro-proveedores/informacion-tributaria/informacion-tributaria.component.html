@@ -1,0 +1,179 @@
+<form [formGroup]="form">
+  <mat-form-field
+    fxFill
+    appearance="outline">
+    <mat-label>Tipo de Persona</mat-label>
+    <mat-select
+      required
+      placeholder="Selecciona una opción"
+      formControlName="tipo_persona">
+      <mat-option value="">
+        Selecciona una opción
+      </mat-option>
+      <mat-option
+        *ngFor="let option of tipoPersona$ | async"
+        [value]="option.id">
+        {{ option.description }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('tipo_persona').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix="Este campo es requerido"
+        [errors]="form.get('tipo_persona').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field
+    fxFill
+    appearance="outline">
+    <mat-label>Régimen de IVA</mat-label>
+    <mat-select
+      required
+      placeholder="Selecciona una opción"
+      formControlName="regimen_iva">
+      <mat-option value="">
+        Selecciona una opción
+      </mat-option>
+      <mat-option
+        *ngFor="let option of tipoIva$ | async"
+        [value]="option.id">
+        {{ option.description }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('regimen_iva').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix="Este campo es requerido"
+        [errors]="form.get('regimen_iva').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field
+    fxFill
+    appearance="outline">
+    <mat-label>Régimen de renta</mat-label>
+    <mat-select
+      required
+      placeholder="Seleccione sus tipos de renta"
+      formControlName="regimen_renta"
+      multiple>
+      <mat-select-trigger>
+          <span *ngIf="form.get('regimen_renta').value?.length >= 1" class="additional-selection">
+          ({{form.get('regimen_renta').value.length }} {{form.get('regimen_renta').value.length > 1 ? 'seleccionados' : 'seleccionado'}})
+          </span>
+      </mat-select-trigger>
+      <mat-option
+        (click)="enableOtherRegimen(item)"
+        *ngFor="let item of regimenRenta$ | async" [value]="item.id">
+        {{item.description}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('regimen_renta').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix="Este campo es requerido"
+        [errors]="form.get('regimen_renta').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field
+    fxFill
+    appearance="outline">
+    <mat-label>Regimen especial ¿Cúal?</mat-label>
+    <input
+      matInput
+      placeholder="Escriba el regimen especial aquí"
+      type="text"
+      [formControl]="form.get('regimen_especial')">
+    <mat-error *ngIf="form.get('regimen_especial').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix="Este campo es requerido"
+        [errors]="form.get('regimen_especial').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <div
+    fxFill
+    class="terms-and-conditions"
+    fxLayout="row"
+    fxLayoutAlign="end end">
+    <button
+      color="accent"
+      matStepperNext
+      [disabled]="form.invalid"
+      mat-button>
+        SIGUIENTE
+    </button>
+  </div>
+  <!--  <mat-error *ngIf="form.get('tipo_persona').status === 'INVALID'">
+     <app-form-errors
+       errorPrefix="Tipo de persona"
+       [errors]="form.get('tipo_persona').errors">
+     </app-form-errors>
+   </mat-error>
+   <mat-radio-group
+     class="materia-border-radius padding"
+     fxLayout="column"
+     fxLayoutGap="5px"
+     formControlName="regimen_iva">
+       <mat-radio-button value="comun">
+         Común
+       </mat-radio-button>
+       <mat-radio-button value="contributivo">
+         Contributivo
+       </mat-radio-button>
+   </mat-radio-group>
+   <mat-error
+     *ngIf="form.get('regimen_iva').status === 'INVALID'">
+     <app-form-errors
+       errorPrefix="Tipo de persona"
+       [errors]="form.get('regimen_iva').errors">
+     </app-form-errors>
+   </mat-error> -->
+ <!-- <mat-form-field
+    appearance="outline">
+    <mat-label>Regimen Renta</mat-label>
+    <mat-radio-group formControlName="regimen_iva">
+      <mat-radio-button >
+        <mat-radio-button value="comun">
+          Común
+        </mat-radio-button>
+        <mat-radio-button value="contrivutivo">
+          Contributivo
+        </mat-radio-button>
+      </mat-radio-button>
+    </mat-radio-group>
+    <mat-error *ngIf="form.get('regimen_iva').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix="Tipo de persona"
+        [errors]="form.get('regimen_iva').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field
+    appearance="outline">
+    <mat-label>Celular</mat-label>
+    <input
+      type="number"
+      matInput
+      placeholder="Escriba su número celular"
+      formControlName="celular">
+    <mat-error *ngIf="form.get('celular').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix=""
+        [errors]="form.get('celular').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <div
+    fxFill
+    class="terms-and-conditions"
+    fxLayout="row"
+    fxLayoutAlign="end end">
+    <button
+      color="accent"
+      mat-raised-button
+      matStepperNext
+      mat-button>
+      SIGUIENTE
+    </button>
+  </div> -->
+</form>

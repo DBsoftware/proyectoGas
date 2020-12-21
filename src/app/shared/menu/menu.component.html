@@ -1,0 +1,122 @@
+<div fxLayout="column" id="nav-container">
+  <div fxFlex="20"
+       id="side-nav-logo-app"
+       fxLayout="row"
+       fxLayoutAlign="center center">
+    <img width="70%"
+         fxFlexAlign="center center"
+         src="{{logo}}"  alt="LLanogas">
+  </div>
+  <nav fxFlex="80">
+    <!-- no-logged menu -->
+    <div
+      fxLayout="column"
+      fxLayoutAlign=" stretch">
+      <mat-menu>
+
+      </mat-menu>
+      <mat-nav-list>
+        <mat-list-item>
+          <a
+            fxLayout="row"
+            fxLayoutAlign="start center"
+            fxLayoutGap="16px"
+            [routerLink]="['/'+initReouteItem.path]">
+            <mat-icon class="color-icon">{{initReouteItem.icon}}</mat-icon>
+            <span>{{initReouteItem.alias}}</span>
+          </a>
+        </mat-list-item>
+      </mat-nav-list>
+      <ng-container
+        *ngFor="let route of noLoggedRoutes$ | async">
+        <!--  NO CHILDS -->
+        <ng-container *ngIf="route.path !== null">
+          <ng-container
+            *ngTemplateOutlet="singleMenuItem; context: route">
+          </ng-container>
+        </ng-container>
+        <!--  WITH CHILDS -->
+        <ng-container
+            *ngIf="route.path === null">
+            <ng-container
+              *ngTemplateOutlet="composedMenuItem; context: route">
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+    <!-- end no logged menu -->
+    <!-- logged menu -->
+    <ng-container
+      *ngFor="let route of loggedInRoutes$ | async">
+      <ng-container
+        *ngIf="route.path == null">
+        <ng-container
+          *ngTemplateOutlet="composedMenuItem; context: route"></ng-container>
+      </ng-container>
+      <ng-container *ngIf="route.path !=  null">
+        <ng-container
+          *ngTemplateOutlet="singleMenuItem; context: route"></ng-container>
+      </ng-container>
+    </ng-container>
+    <!-- end logged menu -->
+    <ng-template
+      #singleMenuItem
+      let-path="fullPath"
+      let-alias="alias"
+      let-icon="icon"
+      let-isExternal="external">
+        <a
+          *ngIf="!isExternal"
+          mat-menu-item
+          [routerLink]="path">
+          <mat-icon>{{icon}}</mat-icon>
+          <span>{{alias}}</span>
+        </a>
+        <a
+          target="_blank"
+          *ngIf="isExternal"
+          mat-menu-item
+          [href]="path">
+          <mat-icon>{{icon}}</mat-icon>
+          <span>{{alias}}</span>
+        </a>
+    </ng-template>
+    <ng-template
+      #composedMenuItem
+      let-children="childrens"
+      let-alias="alias"
+      let-icon="icon">
+        <button
+          mat-menu-item
+          [matMenuTriggerFor]="appMenu">
+          <mat-icon>{{icon}}</mat-icon>
+          <span>{{alias}}</span>
+          <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+        <mat-menu #appMenu="matMenu"
+                  [xPosition]="'before'"
+                  [yPosition]="'below'">
+          <ng-container *ngFor="let routeChild of children">
+            <ng-container *ngTemplateOutlet="singleMenuItem; context: routeChild"></ng-container>
+          </ng-container>
+        </mat-menu>
+    </ng-template>
+
+    <!-- end no logged menu -->
+    <mat-nav-list
+      *ngIf="!userLogged">
+      <mat-list-item
+        (click)="_auth.logout()">
+        <a
+          *ngIf="!userLogged"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          fxLayoutGap="16px">
+            <mat-icon class="color-icon">exit_to_app</mat-icon>
+            <span>Cerrar sesión</span>
+        </a>
+      </mat-list-item>
+    </mat-nav-list>
+
+  </nav>
+</div>

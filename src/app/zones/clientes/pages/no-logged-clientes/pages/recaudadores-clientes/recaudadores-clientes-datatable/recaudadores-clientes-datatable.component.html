@@ -1,0 +1,92 @@
+<div class="materia-border margin-card">
+  <mat-table #table [dataSource]="dataSource">
+      <ng-container matColumnDef="entidad">
+        <mat-header-cell
+          fxFlex="30%"
+          *matHeaderCellDef>
+          Entidad
+        </mat-header-cell>
+        <mat-cell
+          fxFlex="30%"
+          *matCellDef="let rowData">
+          <div fxLayout="row"
+               fxLayoutGap="5px"
+               fxLayoutAlign="start center">
+            <img class="img-row" src="{{ rowData.pathImg }}">
+            <span>{{ rowData.description }}</span>
+          </div>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="municipio">
+        <mat-header-cell
+          fxFlex="22%"
+          mat-header-cell
+          *matHeaderCellDef>
+          Municipio
+        </mat-header-cell>
+        <mat-cell
+          fxFlex="22%"
+          *matCellDef="let rowData">
+          {{ rowData.address }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="direccion">
+        <mat-header-cell
+          fxFlex="30%"
+          *matHeaderCellDef>
+          Dirección
+        </mat-header-cell>
+        <mat-cell
+          fxFlex="30%"
+          *matCellDef="let rowData">
+          {{ rowData.address }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="telefono">
+        <mat-header-cell
+          fxFlex="10%"
+          *matHeaderCellDef>
+          Teléfono
+        </mat-header-cell>
+        <mat-cell
+          fxFlex="10%"
+          *matCellDef="let rowData">
+          {{ rowData.phoneNumber }}
+        </mat-cell>
+      </ng-container>
+      <ng-container
+        matColumnDef="acciones">
+        <mat-header-cell
+          fxLayout="row"
+          fxLayoutAlign="end center"
+          fxFlex="10%"
+          *matHeaderCellDef>
+        </mat-header-cell>
+        <mat-cell
+          fxFlex="10%"
+          fxLayout="row"
+          fxLayoutAlign="end center"
+          *matCellDef="let rowData">
+          <button
+            (click)="showLocation(rowData)"
+            matTooltip="Ver ubicación"
+            matTooltipPosition="right"
+            mat-icon-button>
+            <mat-icon class="repository-tratamiento-icon">place</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+      <mat-row
+        *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+    <mat-paginator
+      [pageIndex]="dataSource.number"
+      (page)="paginate($event)"
+      [length]="dataSource.totalElements"
+      [showFirstLastButtons]="true"
+      [pageSize]="dataSource.size"
+      [pageSizeOptions]="[5, 10, 20]">
+    </mat-paginator>
+</div>

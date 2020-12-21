@@ -1,0 +1,65 @@
+<form
+  fxLayoutGap="10px"
+  fxLayout="column"
+  fxLayoutAlign="center start"
+  class="mat-elevation-z2 padding25 general-card-border"
+  [formGroup]="form">
+  <h1 class="mat-h1">Empresa - Certificados Retención</h1>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Año</mat-label>
+      <mat-select
+        required
+        placeholder="Seleccione un tipo de identificación"
+        formControlName="año">
+        <mat-option value="">
+          Seleccione una opción
+        </mat-option>
+        <mat-option *ngFor="let option of tipoIdentifacion$ | async"
+                    [value]="option.id">
+          {{  option.description }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('año').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('año').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+  <mat-form-field
+    appearance="outline">
+    <mat-label>Certificado</mat-label>
+    <mat-select
+      required
+      placeholder="Seleccione un tipo de identificación"
+      formControlName="certificado">
+      <mat-option value="">
+        Seleccione una opción
+      </mat-option>
+      <mat-option *ngFor="let option of tipoIdentifacion$ | async"
+                  [value]="option.id">
+        {{  option.description }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('certificado').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix="Este campo es requerido"
+        [errors]="form.get('certificado').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <div
+  fxFill
+    fxLayout="row"
+    fxLayoutAlign="center center">
+  <re-captcha
+    (resolved)="recaptchaResolved($event)"
+                  formControlName="recaptcha">
+    </re-captcha>
+  </div>
+  <div>
+
+  </div>
+
+</form>

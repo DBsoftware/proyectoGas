@@ -1,0 +1,80 @@
+<div
+  class="vh-cien-calc"
+  fxLayoutAlign="center center"
+  fxLayout="row">
+  <div
+    class="mat-elevation-z2
+     card
+    general-card-border">
+    <h1 class="mat-h1">GNV - Ubicación estaciones</h1>
+    <form
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      fxLayoutGap="20px"
+      [formGroup]="form">
+      <mat-form-field appearance="outline">
+        <mat-label>Municipio</mat-label>
+        <input
+          (blur)="checkInput($event, 'municipio')"
+          formControlName="municipio"
+          type="text"
+          matInput
+          [matAutocomplete]="municipioAuto"
+          placeholder="Escriba el municipio">
+        <mat-autocomplete
+          #municipioAuto="matAutocomplete">
+          <mat-option
+            (click)="selectedMunicipio(option)"
+            *ngFor="let option of filteredMunicipio$ | async"
+            [value]="option.description">
+            {{option.description }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="form.get('municipio').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('municipio').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Estación</mat-label>
+        <input
+          formControlName="estacion"
+          type="text"
+          matInput
+          placeholder="Escriba la estación">
+        <mat-error *ngIf="form.get('estacion').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('estacion').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <div
+        fxFlexAlign="start"
+        [matTooltipDisabled]="!(form.value.categoria === '' && form.value.municipio === '' && form.value.estacion === '')"
+        matTooltip="Debes buscar por lo menos un campo para poder consultar los recaudadores">
+        <button
+          class="margin-button"
+          #button
+          (click)="consultar()"
+          color="accent"
+          [disabled]="(((form?.value.municipio === '' || metaDataMap?.municipioId === 404) && ( form?.value.estacion === '' || metaDataMap?.estacionId === 404)) || form.invalid ||  (_loading.getHTTPStatus() | async) )"
+          mat-raised-button>
+          CONSULTAR
+        </button>
+      </div>
+    </form>
+    <app-gnv-ubicacion-estaciones-clientes-map-viewer
+      [mapData]="mapData">
+    </app-gnv-ubicacion-estaciones-clientes-map-viewer>
+    <app-gnv-ubicacion-estaciones-clientes-datatable
+      [metaDataMap]="metaDataMap"
+      (cordenadas)="sendToMap($event)"
+      *ngIf="dataToDatatable"
+      [dataDatable]="dataToDatatable">
+    </app-gnv-ubicacion-estaciones-clientes-datatable>
+  </div>
+
+</div>

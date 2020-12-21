@@ -1,0 +1,29 @@
+<footer
+        id="footer"
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap.lt-md="20px"
+
+        fxLayoutAlign="start center">
+    <div
+      fxFlex="32.5%"
+      fxFlex.lt-md="100%"
+      fxLayoutAlign="center">
+       <img
+         width="auto"
+         height="50"
+         src="{{logo_white}}" alt="Company logo">
+    </div>
+    <div
+      fxFlex.lt-md="100%"
+      fxFlex="35%"
+      fxLayoutAlign="center">
+      prograCOL {{ now }} ©
+    </div>
+    <div
+      fxFlex.lt-md="100%"
+      fxFlex="32.5%"
+      fxLayoutAlign="center">
+        <a style="color: white" [routerLink]="'/'+goAdmin">Ir al administrador</a>
+    </div>
+</footer>

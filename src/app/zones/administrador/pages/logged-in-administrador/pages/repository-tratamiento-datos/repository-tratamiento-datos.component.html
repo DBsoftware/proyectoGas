@@ -1,0 +1,118 @@
+<div class="mat-elevation-z2">
+  <header fxLayout="row"
+          fxLayoutAlign="end center"
+          class="header-container">
+    <button
+      color="accent"
+      (click)="goToForm()"
+      mat-raised-button>GENERAR POLITICA</button>
+  </header>
+  <mat-divider></mat-divider>
+  <mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="status">
+      <mat-header-cell
+        fxFlex="1 1 72px"
+        *matHeaderCellDef>
+        Activo
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="1 1 72px"
+        *matCellDef="let row; let i = index">
+        <mat-slide-toggle
+          (click)="confirmTogglePolitica(row, $event, i)"
+          [checked]="row.status == 'A'"
+        ></mat-slide-toggle>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="file">
+      <mat-header-cell
+        fxFlex="30%"
+        *matHeaderCellDef>
+        Archivo
+      </mat-header-cell>
+      <mat-cell
+        (click)="openDialogPDF(rowData)"
+        fxFlex="30%"
+        *matCellDef="let rowData">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <mat-icon color="warn">picture_as_pdf</mat-icon>
+          <u  class="file-name">{{ rowData.file.fileName | slice:0:30 }}
+            <span *ngIf="rowData.file.fileName.length > 30">...</span>
+          </u>
+        </div>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="version">
+      <mat-header-cell
+        fxFlex="12%"
+        mat-header-cell
+        *matHeaderCellDef>
+        Versión
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="12%"
+        [matTooltip]="rowData.observation"
+        *matCellDef="let rowData">
+        {{ rowData.version }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="fecha_edicion">
+      <mat-header-cell
+        fxFlex="13%"
+        *matHeaderCellDef>
+        Fecha de edición
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="13%"
+        *matCellDef="let rowData">
+        {{ format(rowData.date) }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="responsable">
+      <mat-header-cell
+        fxFlex="22%"
+        *matHeaderCellDef>
+          Responsable
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="22%"
+        *matCellDef="let rowData">
+        {{ rowData.personInCharge.fullName }}
+      </mat-cell>
+    </ng-container>
+    <ng-container
+      matColumnDef="acciones">
+      <mat-header-cell
+        fxLayout="row"
+        fxLayoutAlign="end center"
+        fxFlex="20%"
+        *matHeaderCellDef>
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="20%"
+        fxLayout="row"
+        fxLayoutAlign="end center"
+        *matCellDef="let rowData">
+        <button
+          (click)="eliminarPolitica(rowData)"
+          matTooltip="Eliminar política"
+          matTooltipPosition="left"
+          mat-icon-button>
+          <mat-icon class="repository-tratamiento-icon">block</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+  <mat-paginator
+                [pageIndex]="dataSource.indexPage"
+                (page)="paginate($event)"
+                [length]="dataSource.totalItems"
+                [showFirstLastButtons]="true"
+                 [pageSize]="dataSource.sizePage"
+                 [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
+</div>

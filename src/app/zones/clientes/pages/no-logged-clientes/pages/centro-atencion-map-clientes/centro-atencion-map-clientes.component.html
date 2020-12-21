@@ -1,0 +1,51 @@
+<div
+  class="vh-cien-calc"
+    fxLayout="column"
+    fxLayoutAlign="center center">
+  <h1 class="mat-h1">Centros de atención y puntos de recepción</h1>
+
+  <div
+    class="mat-elevation-z2 map-card general-card"
+    fxLayout="row"
+    fxLayoutAlign="start stretch">
+    <ng-container  *ngIf="(mapCentroAtencion$ | async) as points">
+      <mat-nav-list fxFlex="20%">
+        <mat-list-item
+          *ngFor="let point of points"
+          (click)="sendPoints(point)">
+  <!--
+          <mat-icon matListIcon>{{point.icon}}</mat-icon>
+  -->
+          {{point.description }}
+        </mat-list-item>
+      </mat-nav-list>
+      <mat-divider
+        [vertical]="true">
+      </mat-divider>
+      <div fxFlex="80%"
+           class="map-container" #map_container>
+          <agm-map
+            (mapReady)="mapReady($event)"
+            [style.height.px]="map_container.offsetHeight"
+            [latitude]="lat"
+            [longitude]="lng">
+            <agm-marker
+              *ngIf="pointMap"
+              (markerClick)="selectMarker(infoWindow)"
+              [latitude]="lat"
+              [longitude]="lng">
+              <agm-info-window
+                [isOpen]="isOpen(pointMap, infoWindow)"
+                #infoWindow>
+                <h2>{{ pointMap.description }}</h2>
+                <ul>
+                  <li>Horarios: {{ pointMap.address }}</li>
+                </ul>
+              </agm-info-window>
+            </agm-marker>
+          </agm-map>
+      </div>
+    </ng-container>
+
+  </div>
+</div>

@@ -1,0 +1,22 @@
+@import '~@angular/material/theming';
+
+@mixin no-logged-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $accent: map-get($theme, accent);
+
+  #container-mobile {
+      a {
+        color: mat-color($foreground, secondary-text);
+      }
+      button {
+        color: mat-color($foreground, secondary-text);
+      }
+    .active-mobile-item {
+      color: mat-color($accent);
+    }
+  }
+
+
+
+}
+

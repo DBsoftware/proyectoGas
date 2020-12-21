@@ -1,0 +1,129 @@
+<div class="mat-elevation-z2">
+  <header fxLayout="row"
+          fxLayoutGap="10px"
+          fxLayoutAlign="end center"
+          class="header-container">
+    <button
+      mat-raised-button
+      (click)="openModal()"
+      color="accent">
+        CARGA MASIVA
+    </button>
+    <button
+      color="accent"
+      (click)="goToForm()"
+      mat-raised-button>
+        CREAR EVALUACIÓN DE DESEMPEÑO
+    </button>
+  </header>
+  <mat-divider></mat-divider>
+  <mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="toogle">
+      <mat-header-cell
+        fxFlex="1 1 82px"
+        *matHeaderCellDef>
+        Estado
+      </mat-header-cell>
+      <mat-cell
+        matTooltip="cambiar estado"
+        fxFlex="1 1 82px"
+        *matCellDef="let row;">
+        <mat-slide-toggle
+          (click)="confirmToggleEvaluacion(row)"
+          [checked]="row.status == 'A'">
+
+        </mat-slide-toggle>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="filename">
+      <mat-header-cell
+        fxFlex="33%"
+        *matHeaderCellDef>
+        Archivo
+      </mat-header-cell>
+      <mat-cell
+        (click)="openDialogPDF(rowData)"
+        fxFlex="33%"
+        *matCellDef="let rowData">
+        <div
+          fxLayout="row"
+          fxLayoutAlign="space-between center">
+          <mat-icon color="warn">picture_as_pdf</mat-icon>
+          <u
+            class="file-name">
+            {{ rowData?.description | slice:0:30 }}
+            <span *ngIf="rowData?.fileName?.length > 30">...</span>
+          </u>
+        </div>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="year">
+      <mat-header-cell
+        fxFlex="33%"
+        *matHeaderCellDef>
+        Año
+      </mat-header-cell>
+      <mat-cell
+        (click)="openDialogPDF(rowData)"
+        fxFlex="33%"
+        *matCellDef="let rowData">
+        {{ rowData.year }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="companyName">
+      <mat-header-cell
+        fxFlex="33%"
+        *matHeaderCellDef>
+        Nombre del proveedor
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="33%"
+        *matCellDef="let rowData">
+        {{ rowData.user?.companyName }}
+      </mat-cell>
+    </ng-container>
+    <ng-container
+      matColumnDef="acciones">
+      <mat-header-cell
+        fxLayout="row"
+        fxLayoutAlign="end center"
+        fxFlex="33%"
+        *matHeaderCellDef>
+        Acciones
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="33%"
+        fxLayout="row"
+        fxLayoutAlign="end center"
+        *matCellDef="let rowData">
+        <button
+          (click)="editarEvaluacionDesempeno(rowData)"
+          matTooltip="Editar evaluación desempeño"
+          matTooltipPosition="left"
+          mat-icon-button>
+          <mat-icon class="repository-tratamiento-icon">edit</mat-icon>
+        </button>
+        <button
+          (click)="eliminarEvaluacion(rowData)"
+          matTooltip="Eliminar evaluación desempeño"
+          matTooltipPosition="left"
+          mat-icon-button>
+          <mat-icon class="repository-tratamiento-icon">block</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row
+      *matHeaderRowDef="displayedColumns;"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+  <mat-paginator
+    [pageIndex]="dataSource.indexPage"
+    (page)="paginate($event)"
+    [length]="dataSource.totalItems"
+    [showFirstLastButtons]="true"
+    [pageSize]="dataSource.sizePage"
+    [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
+</div>

@@ -1,0 +1,88 @@
+<div class="login-container" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <img class="login-logo" src="{{ logo }}">
+    </div>
+    <mat-card-title>
+    <span id="login-title">Iniciar sesión<br>
+      <small class="aux-text">Ir a la plataforma</small>
+    </span>
+    </mat-card-title>
+    <mat-card-content>
+      <form
+        [formGroup]="loginForm"
+        autocomplete="off"
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        novalidate>
+        <mat-form-field appearance="outline">
+          <mat-label>Correo electrónico</mat-label>
+          <input  autocomplete="off"
+                  type="email"
+                  formControlName="email"
+                  matInput
+                  placeholder="Correo electrónico"
+                  required>
+          <mat-error
+            *ngIf="loginForm.get('email').status === 'INVALID'">
+            <app-form-errors
+              errorPrefix="Escribir el e-mail es obligatorio"
+              [errors]="loginForm.get('email').errors">
+            </app-form-errors>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+            <!--(keyup.enter)="attemptDoLogin()-->
+          <input
+            [type]="hide ? 'password' : 'text'"
+            autocomplete="off"
+            formControlName="contrasena"
+            matInput
+            placeholder="Contraseña"
+            required>
+          <mat-icon
+            matSuffix
+            (click)="hide = !hide">
+            {{ hide ? 'visibility_off' : 'visibility'}}
+          </mat-icon>
+          <mat-error
+            *ngIf="loginForm.get('contrasena').status === 'INVALID'">
+              <app-form-errors
+                errorPrefix="Escribir la contraseña es obligatorio"
+                [errors]="loginForm.get('contrasena').errors">
+              </app-form-errors>
+          </mat-error>
+        </mat-form-field>
+        <re-captcha formControlName="recaptcha"></re-captcha>
+      </form>
+      <!--  (click)="gotoResetPassword()" -->
+<!--      <button
+        class="btn-account-helpers"
+        mat-button
+        color="accent">¿ Has olvidado tu contraseña ?</button>-->
+
+    </mat-card-content>
+      <p class="aux-text">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      </p>
+
+    <mat-card-content>
+    </mat-card-content>
+    <mat-card-content fxLayout="row" fxLayoutAlign="end center">
+      <!--        (click)="attemptDoLogin()"--->
+      <button
+        [disabled]="loginForm.invalid"
+        (click)="doLogin()"
+        mat-raised-button
+        color="accent">
+        SIGUIENTE
+      </button>
+    </mat-card-content>
+  </mat-card>
+<!--  <div fxLayout="row" fxFlex="35" fxLayoutAlign="space-between">
+    <p class="footer-text-login">Versión 1.0</p>
+    <p class="footer-text-login">Cusiana Gas - 2018</p>
+  </div>-->
+
+</div>

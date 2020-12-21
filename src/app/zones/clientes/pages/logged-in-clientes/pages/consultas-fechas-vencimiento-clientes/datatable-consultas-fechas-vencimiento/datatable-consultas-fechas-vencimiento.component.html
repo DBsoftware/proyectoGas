@@ -1,0 +1,93 @@
+<div *ngIf="dataDatable && filterbyMunicipio; else filterbyClientCode"
+     class="materia-border margin-card-consultas">
+  <mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="expireDate">
+      <mat-header-cell
+        fxFlex="50%"
+        *matHeaderCellDef>
+      Código
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="50%"
+        *matCellDef="let rowData">
+        <div fxLayout="row"
+             fxLayoutGap="5px"
+             fxLayoutAlign="start center">
+          <span>{{ rowData.id }}</span>
+        </div>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="suspensionDate">
+      <mat-header-cell
+        fxFlex="50%"
+        mat-header-cell
+        *matHeaderCellDef>
+        Fecha de de vencimiento
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="50%"
+        *matCellDef="let rowData">
+        <span>{{ rowData.expireDat | dateMoment:'DD-MM-YYYY'  }}</span>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+  <mat-paginator
+    [pageIndex]="dataSource.number"
+    (page)="paginate($event)"
+    [length]="dataSource.totalElements"
+    [showFirstLastButtons]="true"
+    [pageSize]="dataSource.size"
+    [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
+</div>
+<ng-template  #filterbyClientCode>
+  <div *ngIf="dataDatable" class="materia-border margin-card-consultas">
+    <mat-table #table [dataSource]="dataSource">
+      <ng-container matColumnDef="number">
+        <mat-header-cell
+          fxFlex="50%"
+          mat-header-cell
+          *matHeaderCellDef>
+          Codigo
+        </mat-header-cell>
+        <mat-cell
+          fxFlex="50%"
+          *matCellDef="let rowData">
+          {{ rowData.id }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="expireDate">
+        <mat-header-cell
+          fxFlex="50%"
+          *matHeaderCellDef>
+          Fecha de vencimiento
+        </mat-header-cell>
+        <mat-cell
+          fxFlex="50%"
+          *matCellDef="let rowData">
+          <div fxLayout="row"
+               fxLayoutGap="5px"
+               fxLayoutAlign="start center">
+            <span>{{ rowData.expireDate | dateMoment:'DD-MM-YYYY'  }}</span>
+          </div>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+      <mat-row
+        *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+    <mat-paginator
+      [pageIndex]="dataSource.number"
+      (page)="paginate($event)"
+      [length]="dataSource.totalElements"
+      [showFirstLastButtons]="true"
+      [pageSize]="dataSource.size"
+      [pageSizeOptions]="[5, 10, 20]">
+    </mat-paginator>
+  </div>
+</ng-template>

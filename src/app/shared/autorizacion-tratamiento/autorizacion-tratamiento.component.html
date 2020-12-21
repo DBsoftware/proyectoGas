@@ -1,0 +1,19 @@
+<ng-container *ngIf="!loading; else obteniendo">
+  <span>
+  Antes de continuar, revise nuestra
+  <a   class="open-politica"
+       (click)="openFirstPDF()">
+    Política de tratamiento de datos personales
+  </a>
+</span>
+  <span>
+  Para continuar con el registro revise la
+  <a class="open-politica" (click)="openSecondPDF()">
+    Autorización  para el tratamiento de datos personales
+  </a>
+</span>
+</ng-container>
+<ng-template #obteniendo>
+  <span>Estamos obteniendo las políticas por favor espere...</span>
+</ng-template>
+

@@ -1,0 +1,88 @@
+<div
+  fxLayoutGap="10px"
+  fxLayout="column"
+  fxLayoutAlign="stretch start"
+  class="mat-elevation-z2 padding25 general-card-border">
+  <h1 class="mat-h1">Evaluación de desempeño proveedores</h1>
+  <form
+    fxFill
+   [formGroup]="form">
+    <ng-container
+      *ngIf="(yearsList$ | async) as yearList">
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Año</mat-label>
+        <mat-select
+          required
+          placeholder="Seleccione un año"
+          formControlName="year">
+          <mat-option value="">
+            Seleccione una opción
+          </mat-option>
+          <mat-option *ngFor="let option of yearList"
+                      [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('year').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('year').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+        <p>{{yearList.length == 0 ? 'No hay fechas de evaluación' : ''}}</p>
+    </ng-container>
+    <div
+      style="margin-bottom: 20px"
+      fxFill
+      fxLayout="column"
+      fxLayoutAlign="center center">
+      <re-captcha formControlName="recaptcha">
+    </re-captcha>
+    </div>
+    <div
+      class="terms-and-conditions"
+      fxLayout="row"
+      fxLayoutAlign="end end">
+      <button
+        style="margin-bottom: 30px"
+        color="accent"
+        mat-raised-button
+        (click)="consultar()"
+        [disabled]="form.invalid || (_loading.getHTTPStatus() | async)"
+        mat-button>
+        CONSULTAR
+      </button>
+    </div>
+  </form>
+  <ng-container *ngIf="(listPDF$ | async) as list">
+    <mat-list
+      fxFill>
+    <mat-divider
+      class="margin-divider"></mat-divider>
+    <mat-list-item
+      (click)="viewPDF(item)"
+      *ngFor="let item of list;  last as last">
+      <mat-icon
+        color="warn"
+        mat-list-icon>
+        picture_as_pdf
+      </mat-icon>
+      <a
+        class="a-download">
+        {{ item.description }}
+      </a>
+
+    </mat-list-item>
+    <mat-list-item
+      *ngIf="list.length === 0">
+      <p
+       >
+        No hay evaluaciones de desempeño para esta fecha
+      </p>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </mat-list>
+  </ng-container>
+</div>

@@ -1,0 +1,270 @@
+<form
+  fxLayoutGap="10px"
+  fxLayout="column"
+  fxLayoutAlign="center start"
+  class="mat-elevation-z2 padding25 general-card-border"
+  [formGroup]="form">
+  <h1 class="mat-h1">Empresa - Consulta Estado de factura</h1>
+  <mat-form-field
+    appearance="outline">
+    <input
+      required
+      (dateChange)="form.get('fecha_final').setValue('')"
+      matInput
+      formControlName="fecha_inicial"
+      [matDatepicker]="picker"
+      placeholder="Fecha de inicio">
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="picker">
+    </mat-datepicker-toggle>
+    <mat-datepicker
+      disabled="false"
+      #picker>
+    </mat-datepicker>
+    <mat-error
+      *ngIf="form.get('fecha_inicial').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix="Este campo es requerido"
+        [errors]="form.get('fecha_inicial').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field
+    appearance="outline">
+    <input
+      required
+      matInput
+      [min]="form.get('fecha_inicial').value"
+      formControlName="fecha_final"
+      [matDatepicker]="picker2"
+      placeholder="Fecha de fin">
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="picker2">
+    </mat-datepicker-toggle>
+    <mat-datepicker
+      [disabled]="form.get('fecha_inicial').value === ''"
+      #picker2>
+    </mat-datepicker>
+    <mat-error
+      *ngIf="form.get('fecha_final').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix="Este campo es requerido"
+        [errors]="form.get('fecha_final').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <div
+    fxFill
+    fxLayout="row"
+    fxLayoutAlign="center center">
+    <re-captcha
+      (resolved)="recaptchaResolved($event)"
+      formControlName="recaptcha">
+    </re-captcha>
+  </div>
+  <div
+      fxFill
+      fxLayout="row"
+      fxLayoutAlign="end center">
+    <button
+      color="accent"
+      mat-raised-button
+      (click)="consultar()"
+      [disabled]="form.invalid || (_loadingService.getHTTPStatus() | async)"
+      mat-button>
+      CONSULTAR
+    </button>
+  </div>
+  <div
+    fxFill
+    class="materia-border table-container">
+  <mat-table
+        #table
+         [dataSource]="dataSource2">
+    <ng-container matColumnDef="fecha_radicacion">
+      <mat-header-cell
+        fxFlex="12%"
+        *matHeaderCellDef>
+        Fecha radicación
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="12%"
+        *matCellDef="let row; let i = index">
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="nombre_proveedor">
+      <mat-header-cell
+        fxFlex="15%"
+        *matHeaderCellDef>
+        Nombre proveedor
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="15%"
+        *matCellDef="let rowData">
+        {{ rowData.companyName }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="entidad_pagadas">
+      <mat-header-cell
+        fxFlex="12%"
+        mat-header-cell
+        *matHeaderCellDef>
+        Entidad pagadas
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="12%"
+        *matCellDef="let rowData">
+        {{ rowData.nit }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="no_facturas">
+      <mat-header-cell
+        fxFlex="12%"
+        *matHeaderCellDef>
+        No. de Facturas
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="12%"
+        *matCellDef="let rowData">
+        {{ rowData.address }}
+      </mat-cell>
+    </ng-container>
+    <ng-container
+      matColumnDef="valor">
+      <mat-header-cell
+
+        fxFlex="12%"
+        *matHeaderCellDef>
+        Valor
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="12%"
+        *matCellDef="let rowData">
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="banco">
+      <mat-header-cell
+        fxFlex="12%"
+        *matHeaderCellDef>
+        Banco
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="12%"
+        *matCellDef="let rowData">
+        {{ rowData.address }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="cuenta_bancaria">
+      <mat-header-cell
+        fxFlex="12%"
+        *matHeaderCellDef>
+        Cuanta bancaria
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="12%"
+        *matCellDef="let rowData">
+        {{ rowData.address }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="estado_factura">
+      <mat-header-cell
+        fxFlex="12%"
+        *matHeaderCellDef>
+        Estado de factura
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="12%"
+        *matCellDef="let rowData">
+        {{ rowData.address }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="fecha_pago">
+      <mat-header-cell
+        fxFlex="12%"
+        *matHeaderCellDef>
+        Fecha pago
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="12%"
+        *matCellDef="let rowData">
+        {{ rowData.address }}
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+  <mat-paginator
+    [pageIndex]="dataSource.number"
+    (page)="paginate($event)"
+    [length]="dataSource.totalElements"
+    [showFirstLastButtons]="true"
+    [pageSize]="dataSource.size"
+    [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
+  </div>
+  <div
+    fxFill=""
+    fxLayout="row"
+    fxLayoutAlign="center center">
+    <div
+      class="materia-border table-container">
+      <mat-table
+        #table
+        [dataSource]="dataSource">
+        <ng-container matColumnDef="descripcion">
+          <mat-header-cell
+            fxFlex="33%"
+            *matHeaderCellDef>
+            Descripción
+          </mat-header-cell>
+          <mat-cell
+            fxFlex="33%"
+            *matCellDef="let rowData">
+            {{ rowData.address }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="valor_base">
+          <mat-header-cell
+            fxFlex="33%"
+            *matHeaderCellDef>
+            Valor base
+          </mat-header-cell>
+          <mat-cell
+            fxFlex="33%"
+            *matCellDef="let rowData">
+            {{ rowData.address }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="deduccion">
+          <mat-header-cell
+            fxFlex="33%"
+            *matHeaderCellDef>
+            Deducción
+          </mat-header-cell>
+          <mat-cell
+            fxFlex="33%"
+            *matCellDef="let rowData">
+            {{ rowData.address }}
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumnsTable2;"></mat-header-row>
+        <mat-row
+          *matRowDef="let row; columns: displayedColumnsTable2;">
+        </mat-row>
+      </mat-table>
+      <mat-paginator
+        [pageIndex]="dataSource.number"
+        (page)="paginate2($event)"
+        [length]="dataSource.totalElements"
+        [showFirstLastButtons]="true"
+        [pageSize]="dataSource.size"
+        [pageSizeOptions]="[5, 10, 20]">
+      </mat-paginator>
+    </div>
+
+  </div>
+</form>

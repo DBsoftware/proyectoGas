@@ -1,0 +1,48 @@
+@import '~@angular/material/theming';
+@import 'theme/theme';
+
+
+
+
+
+/** imports de todos los componentes **/
+@import "styles/card-style";
+@import "styles/core-classes";
+@import 'app/app-not-found/app-not-found.component-theme';
+@import 'app/shared/breadcrumb/breadcrumb-theme';
+@import "app/shared/navbar-no-logged/navbar-no-logged-theme";
+@import "app/shared/footer/footer-theme";
+@import 'app/zones/administrador/pages/logged-in-administrador/pages/repository-tratamiento-datos/repository-tratamiento-datos-theme';
+@import 'app/zones/administrador/pages/logged-in-administrador/pages/repository-tratamiento-datos/pages/form-datos-personales/form-datos-personales-theme';
+@import "app/zones/clientes/pages/logged-in-clientes/pages/pqr-clientes/pqr-clientes-theme";
+@import "app/zones/clientes/pages/no-logged-clientes/pages/centro-atencion-map-clientes/centro-atencion-map-clientes-theme";
+@import "app/zones/clientes/pages/no-logged-clientes/no-logged-clientes-theme";
+@import "app/zones/proveedores/pages/no-logged-proveedores/pages/registro-proveedores/documentacion-adjunta/documentacion-adjunta-registro-proveedores-theme";
+@import "app/zones/administrador/pages/logged-in-administrador/pages/admin-account-proveedores/admin-account-proveedores-theme";
+
+
+/** Dentro de este mixin van todos los componentes con colores personalizados */
+@mixin custom-components-theme($theme) {
+  @include admin-account-proveedores($theme);
+  @include core-classes($theme);
+  @include  general-card-style($theme);
+  @include repository-tratamiento-datos-theme($theme);
+  @include breadcrumb-theme($theme);
+  @include  form-datos-personales-theme($theme);
+  @include app-not-found-component($theme);
+  @include  pqr-clientes-theme($theme);
+  @include centro-atencion-map-clientes-theme($theme);
+  @include navbar-no-logged-theme($theme);
+  @include footer-theme($theme);
+  @include no-logged-theme($theme);
+  @include documentacion-adjunta-registro-proveedores($theme);
+}
+
+@include angular-material-theme($default-theme);
+@include custom-components-theme($default-theme);
+
+body { margin: 0; font-family: 'Google Sans',arial,sans-serif };
+.width-field {
+  width: 100%;
+}
+

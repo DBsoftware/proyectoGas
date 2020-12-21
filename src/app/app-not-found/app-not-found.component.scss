@@ -1,0 +1,15 @@
+#not-found-container {
+  height: 100vh;
+  .card-not-found{
+    padding: 12px;
+    border-radius: 4px;
+    .mat-subheading-4 {
+      line-height: 36px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+    .button-container {
+      padding-top: 3vh;
+    }
+  }
+}

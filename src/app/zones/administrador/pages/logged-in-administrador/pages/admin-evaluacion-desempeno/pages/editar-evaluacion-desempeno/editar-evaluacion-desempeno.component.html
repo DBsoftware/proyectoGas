@@ -1,0 +1,96 @@
+<div
+  fxLayoutAlign="center start"
+  fxLayout="row">
+  <form
+    fxLayoutGap="10px"
+    fxLayout="column"
+    fxLayoutAlign="center start"
+    class="mat-elevation-z2 padding25 general-card-border card-firmas"
+    [formGroup]="form">
+    <h1 class="mat-h1">Editar nueva evaluación de desempeño</h1>
+    <mat-form-field  appearance="outline">
+      <mat-label>Descripción del archivo</mat-label>
+      <input
+        required
+        matInput
+        type="text"
+        formControlName="descripcion">
+      <mat-error
+        *ngIf="form.get('descripcion').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('descripcion').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field  appearance="outline">
+      <mat-label>Año</mat-label>
+      <input matInput
+             formControlName="year"
+             [matDatepicker]="picker"
+             placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker
+        (yearSelected)="chosenYearHandler($event, picker)"
+        [startView]="'multi-year'"
+        #picker>
+      </mat-datepicker>
+      <mat-error
+        *ngIf="form.get('year').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('year').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Nombre o NIT del Proveedor</mat-label>
+      <input
+        required
+        formControlName="proveedores"
+        type="text"
+        matInput
+        [matAutocomplete]="proveedoresAuto"
+        placeholder="Escribe el nombre o NIT del Proveedor a buscar">
+      <mat-autocomplete
+        (closed)="_autoComplete.compareValueWithSelection(form.get('proveedores'))"
+        #proveedoresAuto="matAutocomplete">
+        <mat-option
+          (onSelectionChange)="_autoComplete.seeSelectionObject(option, 'proveedores')"
+          #options
+          *ngFor="let option of filteredProveedor$ | async"
+          [value]="option.companyName ? option.companyName: option.description">
+          {{ option.companyName ? option.companyName: option.description }}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="form.get('proveedores').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('proveedores').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <app-upload-multiple-files
+      fxFill
+      (sentIdFiles)="recivedIdFiles($event)"
+      [multiple]="false"
+      [arrIcons]="false"
+      [percentWidth]="98"
+      [formControlFile]="form.get('adjuntos')"
+      [url]="urlToUpload">
+    </app-upload-multiple-files>
+    <div
+      fxFill
+      fxLayout="row"
+      fxLayoutAlign="end center">
+      <button
+        (click)="crearEvaluacion()"
+        [disabled]="form.invalid || (_loading.getHTTPStatus() | async) || idFiles.length === 0"
+        color="accent"
+        mat-button>
+        EDITAR EVALUACION
+      </button>
+    </div>
+  </form>
+</div>

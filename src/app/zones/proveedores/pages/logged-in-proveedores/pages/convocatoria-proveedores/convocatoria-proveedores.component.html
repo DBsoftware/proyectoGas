@@ -1,0 +1,26 @@
+<div
+  fxLayoutGap="10px"
+  fxLayout="column"
+  fxLayoutAlign="center start"
+  class="mat-elevation-z2 padding25 general-card-border">
+  <mat-list
+    fxFlex="30%"
+    class="materia-border-radius">
+    <h3 mat-subheader>Convocatorias</h3>
+    <mat-divider class="margin-divider"></mat-divider>
+    <ng-container *ngFor="let item of activateConvocatorias$ | async; let last = last">
+      <mat-list-item>
+        <mat-icon
+          color="warn"
+          mat-list-icon>
+          picture_as_pdf
+        </mat-icon>
+        <a class="a-download" (click)="viewPDF(item)">
+          {{ item.description }}
+        </a>
+      </mat-list-item>
+      <mat-divider
+        *ngIf="!last"></mat-divider>
+    </ng-container>
+  </mat-list>
+</div>

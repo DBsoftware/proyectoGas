@@ -1,0 +1,131 @@
+<input
+  [formControl]="formControlFile"
+  [multiple]="multiple"
+  [accept]="accept ? accept : 'application/pdf'"
+  hidden
+  (change)="filesChange($event)"
+  #inputFile
+  type="file">
+<div fxLayout="column"
+      fxFill
+      fxLayoutGap="12px"
+      fxLayoutAlign="center center">
+  <div
+      [ngStyle]="{'width.%': percentWidth}"
+    class="mat-accent"
+    [ngClass]="{'files-container':  filesUploaded.length > 0 || notUploadFile.length > 0 }">
+    <h2 *ngIf="filesUploaded.length > 0" class="mat-h2">Archivos subidos</h2>
+    <ng-container *ngFor="let file of filesUploaded; index as i">
+      <div
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+        fxLayoutGap="3px"
+        class="mat-body-1"
+        *ngIf="filesUploaded.length > 0">
+        <div
+          fxLayoutAlign="start center"
+          fxLayout="row">
+          <mat-icon
+            *ngIf="arrIcons === null; else withCustomIcon"
+            class="caption-formdatos">
+            picture_as_pdf
+          </mat-icon>
+          <ng-template #withCustomIcon>
+            <mat-icon
+              [svgIcon]="checkIcon(file.fileName)">
+            </mat-icon>
+          </ng-template>
+          <span>{{ file?.fileName }}</span>
+        </div>
+        <button
+          *ngIf="filesUploaded.length > 0"
+          [disabled]="uploading"
+          matTooltip="Eliminar archivo"
+          color="warn"
+          (click)="removeUploadedFile(i)"
+          mat-icon-button>
+          <mat-icon>clear</mat-icon>
+        </button>
+      </div>
+    </ng-container>
+    <mat-divider *ngIf="filesUploaded.length > 0 && notUploadFile.length !== 0"></mat-divider>
+    <!-- files to upload files -->
+    <h2 *ngIf="notUploadFile.length > 0" class="mat-h2">Archivos por subir</h2>
+    <ng-container *ngFor="let file of notUploadFile; let i = index">
+      <div
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+        fxLayoutGap="3px"
+        class="mat-body-1"
+        *ngIf="file?.name">
+          <div
+            fxLayoutAlign="start center"
+              fxLayout="row">
+              <mat-icon
+                *ngIf="arrIcons === null; else withCustomIcon"
+                class="caption-formdatos">
+                picture_as_pdf
+              </mat-icon>
+            <ng-template #withCustomIcon>
+              <mat-icon
+                [svgIcon]="checkIcon(file.name)">
+              </mat-icon>
+            </ng-template>
+              <span>{{ file?.name }}</span>
+          </div>
+          <button
+            *ngIf="!removeX "
+            [disabled]="uploading"
+            matTooltip="Eliminar archivo"
+            color="warn"
+            (click)="removeNotUploadedFile(i)"
+            mat-icon-button>
+            <mat-icon>clear</mat-icon>
+          </button>
+      </div>
+    </ng-container>
+    <div fxLayout="row"
+         fxFill
+         fxLayoutAlign="end center">
+      <ng-container
+        *ngIf="!uploading; else spinner">
+        <button
+          [disabled]="uploading"
+          [matTooltip]="multiple ? 'Validar y subir archivos' : 'Validar y subir archivo'"
+          (click)="validFileAndUpload(notUploadFile)"
+          color="accent"
+          *ngIf="notUploadFile.length > 0"
+          mat-icon-button>
+          <mat-icon>check</mat-icon>
+        </button>
+      </ng-container>
+      <ng-template #spinner>
+        <mat-progress-spinner
+          [diameter]="26"
+          mode="indeterminate">
+        </mat-progress-spinner>
+      </ng-template>
+    </div>
+  </div>
+  <div
+    *ngIf="formControlFile.status === 'INVALID'"
+    class="mat-caption">
+      <app-form-errors
+        *ngIf="!formControlFile.untouched"
+        [errorPrefix]="multiple ? 'Adjuntar archivos es requerido': 'Adjuntar un archivo es requerido'"
+        [errors]="formControlFile.errors">
+      </app-form-errors>
+    </div>
+    <button
+      [disabled]="uploading || (!multiple && filesUploaded.length === 1)"
+      (click)="inputFile.click()"
+      color="accent"
+      mat-raised-button>
+      <mat-icon>cloud_upload</mat-icon> {{uploading ? ' Cargando archivos...'  : 'Cargar Archivos' }}
+    </button>
+    <small
+      class="mat-caption nofilename-formdatos"
+      *ngIf="isRequired || filesUploaded.length > 1">
+      {{ multiple  ? 'Adjuntar archivos es requerido' : 'Adjuntar un archivo es requerido' }}
+    </small>
+</div>

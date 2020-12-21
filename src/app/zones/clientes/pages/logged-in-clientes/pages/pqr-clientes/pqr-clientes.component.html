@@ -1,0 +1,284 @@
+
+<div fxLayout="row"
+     class="registrer-container"
+     fxLayoutAlign="center stretch">
+  <div class="mat-elevation-z2 card-pqr">
+    <h1 class="mat-h1">Registro servicios peticiones, quejas, reclamos y recursos</h1>
+    <form
+      #f="ngForm"
+      fxLayout="column"
+      [formGroup]="formPqr">
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Código de suscripción</mat-label>
+        <mat-select
+          required
+          placeholder="Código suscripción"
+          formControlName="codigo_cliente">
+          <mat-option value="">
+            Seleccione una opción
+          </mat-option>
+          <mat-option
+            *ngFor="let option of codigoCliente$ | async"
+            [value]="option.code">
+            {{ option.code }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formPqr.get('codigo_cliente').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Debe seleccionar un codigo de cliente"
+            [errors]="formPqr.get('codigo_cliente').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Tipo de identificación</mat-label>
+        <mat-select
+          required
+          placeholder="Tipo de identificación"
+          formControlName="tipo_identificacion">
+          <mat-option value="">
+            Seleccione una opción
+          </mat-option>
+          <mat-option *ngFor="let option of tipo_id$ | async"
+          [value]="option.id">
+            {{ option.description }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formPqr.get('tipo_identificacion').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Debe seleccionar un tipo de identificación"
+            [errors]="formPqr.get('tipo_identificacion').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Identificación</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="identificación"
+          formControlName="identificacion"
+          required>
+        <mat-error *ngIf="formPqr.get('identificacion').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Escribir la identificación es requerido"
+            [errors]="formPqr.get('identificacion').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="center stretch"
+        fxLayoutGap="10px">
+          <mat-form-field
+            class="width-field"
+            appearance="outline">
+            <mat-label>Primer Nombre</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Escribe tu primer nombre"
+              formControlName="nombre"
+              required>
+            <mat-error *ngIf="formPqr.get('nombre').status === 'INVALID'">
+              <app-form-errors
+                errorPrefix="Este campo es requerido"
+                [errors]="formPqr.get('nombre').errors">
+              </app-form-errors>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field
+            class="width-field"
+            appearance="outline">
+            <mat-label>Segundo Nombre</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Escribe tu segundo nombre"
+              formControlName="nombre2">
+            <mat-error *ngIf="formPqr.get('nombre2').status === 'INVALID'">
+              <app-form-errors
+                errorPrefix="Este campo es requerido"
+                [errors]="formPqr.get('nombre2').errors">
+              </app-form-errors>
+            </mat-error>
+          </mat-form-field>
+      </div>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="center stretch"
+        fxLayoutGap="10px">
+          <mat-form-field
+            class="width-field"
+            appearance="outline">
+            <mat-label>Primer apellido</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Escribe tu primer apellido"
+              formControlName="apellido"
+              required>
+            <mat-error *ngIf="formPqr.get('apellido').status === 'INVALID'">
+              <app-form-errors
+                errorPrefix="Este campo es requerido"
+                [errors]="formPqr.get('apellido').errors">
+              </app-form-errors>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field
+            class="width-field"
+            appearance="outline">
+            <mat-label>Segundo apellido</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Escribe tu segundo apellido"
+              formControlName="apellido2">
+            <mat-error *ngIf="formPqr.get('apellido2').status === 'INVALID'">
+              <app-form-errors
+                errorPrefix="Este campo es requerido"
+                [errors]="formPqr.get('apellido2').errors">
+              </app-form-errors>
+            </mat-error>
+          </mat-form-field>
+      </div>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Celular</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Escribe tu celular"
+          formControlName="celular"
+          required>
+        <mat-error *ngIf="formPqr.get('celular').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="formPqr.get('celular').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Número télefonico</mat-label>
+        <input
+          type="number"
+          matInput
+          placeholder="Escribe el número télefonico"
+          formControlName="numero_telefonico"
+          required>
+        <mat-error *ngIf="formPqr.get('numero_telefonico').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="formPqr.get('numero_telefonico').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          placeholder="Escribe el Email"
+          formControlName="email"
+          required>
+        <mat-error *ngIf="formPqr.get('email').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="formPqr.get('email').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Confirmar Email</mat-label>
+        <input
+          type="email"
+          matInput
+          placeholder="Confirma el Email"
+          formControlName="confirmar_email"
+          required>
+        <mat-hint>Confirma la dirección del correo electrónico</mat-hint>
+        <mat-error *ngIf="formPqr.get('confirmar_email').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="formPqr.get('confirmar_email').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Email remitente</mat-label>
+        <input
+          type="email"
+          matInput
+          placeholder="Escribe el email del remitente"
+          formControlName="email_remitente"
+          required>
+        <mat-error *ngIf="formPqr.get('email_remitente').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="formPqr.get('email_remitente').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Observaciones</mat-label>
+        <textarea
+          type="text"
+          matInput
+          cdkTextareaAutosize
+          placeholder="Observaciones"
+          formControlName="observaciones"
+          required>
+        </textarea>
+        <mat-error *ngIf="formPqr.get('observaciones').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Escribe las observaciones"
+            [errors]="formPqr.get('observaciones').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <app-upload-multiple-files
+        fxFill
+        [percentWidth]="98"
+        [arrIcons]="null"
+        [multiple]="true"
+        (sentIdFiles)="reciveIdFiles($event)"
+        [url]="urlToUpload"
+        [formControlFile]="formPqr.get('adjuntos')">
+      </app-upload-multiple-files>
+      <app-autorizacion-tratamiento
+        [control]="formPqr.get('autorizacion')" >
+      </app-autorizacion-tratamiento>
+      <div
+        fxFill
+        fxLayout="row"
+        fxLayoutAlign="center center">
+        <re-captcha
+          class="re-captcha-class"
+          formControlName="recaptcha"
+          (resolved)="recaptchaResolved($event)">
+        </re-captcha>
+      </div>
+    </form>
+    <div
+      class="terms-and-conditions"
+      fxLayout="row"
+      fxLayoutAlign="end end">
+      <button
+        color="accent"
+        mat-raised-button
+        (click)="crearPQR()"
+        [disabled]="formPqr.invalid || (_loadingService.getHTTPStatus() | async)"
+        mat-button>
+        {{ textButton }}
+      </button>
+    </div>
+  </div>
+</div>

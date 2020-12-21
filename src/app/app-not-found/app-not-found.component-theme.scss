@@ -1,0 +1,20 @@
+@import '~@angular/material/theming';
+
+@mixin app-not-found-component($theme) {
+  $primary: map_get($theme, primary);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  #not-found-container {
+    background-color: mat-color($primary);
+    .title {
+       color: mat-color($background, card);
+        text-shadow: 2px 2px 6px mat-color($foreground, text);
+    }
+     .card-not-found {
+       height: 200px;
+       background-color: mat-color($background, card);
+     }
+
+  }
+
+}

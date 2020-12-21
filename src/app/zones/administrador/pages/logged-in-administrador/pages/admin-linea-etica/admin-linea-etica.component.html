@@ -1,0 +1,244 @@
+<div
+  fxLayoutAlign="center start"
+  fxLayout="row">
+  <form
+    fxLayoutGap="10px"
+    fxLayout="column"
+    fxLayoutAlign="center start"
+    class="mat-elevation-z2 padding25 general-card-border"
+    [formGroup]="form">
+    <h1 class="mat-h1">Gestión de registros de línea de ética</h1>
+    <mat-form-field
+      class="width-100"
+      appearance="outline">
+      <input
+        required
+        (dateChange)="form.get('date_end').setValue('')"
+        matInput
+        formControlName="date_init"
+        [matDatepicker]="picker"
+        placeholder="Fecha de inicio">
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="picker">
+      </mat-datepicker-toggle>
+      <mat-datepicker
+        disabled="false"
+        #picker>
+      </mat-datepicker>
+      <mat-error
+        *ngIf="form.get('date_init').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('date_init').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      class="width-100"
+      appearance="outline">
+      <input
+        required
+        matInput
+        [min]="form.get('date_init').value"
+        formControlName="date_end"
+        [matDatepicker]="picker2"
+        placeholder="Fecha de fin">
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="picker2">
+      </mat-datepicker-toggle>
+      <mat-datepicker
+        [disabled]="form.get('date_init').value === ''"
+        #picker2>
+      </mat-datepicker>
+      <mat-error
+        *ngIf="form.get('date_end').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('date_end').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      class="width-100"
+      appearance="outline">
+      <mat-label>Empresas a consultar</mat-label>
+      <mat-select
+        required
+        placeholder="Seleccione las empresas"
+        formControlName="empresas"
+        multiple>
+        <mat-select-trigger>
+          <span *ngIf="form.get('empresas').value?.length >= 1" class="additional-selection">
+          ({{form.get('empresas').value.length }} {{form.get('empresas').value.length > 1 ? 'seleccionados' : 'seleccionado'}})
+          </span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let item of listEmpresas$ | async" [value]="item.id">{{item.description}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('empresas').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('empresas').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      class="width-100"
+      appearance="outline">
+      <mat-label>Primer consecutivo</mat-label>
+      <input
+        required
+        type="number"
+        matInput
+        placeholder="Escribe el primer consecutivo"
+        formControlName="frist_consecutive">
+      <mat-error *ngIf="form.get('frist_consecutive').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('frist_consecutive').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      class="width-100"
+      appearance="outline">
+      <mat-label>Segundo consecutivo</mat-label>
+      <input
+        required
+        type="number"
+        matInput
+        placeholder="Escribe el segundo consecutivo"
+        formControlName="secound_consecutive">
+      <mat-error *ngIf="form.get('secound_consecutive').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('secound_consecutive').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <div
+      fxFill
+      fxLayoutAlign="end center"
+      fxLayout="row">
+      <!--(click)="viewPQRData({id: 0})" -->
+
+      <button
+        color="accent"
+        mat-raised-button
+        mat-button>
+        :(
+      </button>
+      <button
+        color="accent"
+        mat-raised-button
+        (click)="consultar()"
+        [disabled]="form.invalid || (_loadingService.getHTTPStatus() | async)"
+        mat-button>
+        CONSULTAR
+      </button>
+    </div>
+  <mat-table
+    #table
+    [dataSource]="dataSource">
+    <ng-container matColumnDef="novedad">
+      <mat-header-cell
+        fxFlex="24%"
+        *matHeaderCellDef>
+        Novedad
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="24%"
+        *matCellDef="let rowData">
+        {{ rowData.novelty }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="lugar_hechos">
+      <mat-header-cell
+        fxFlex="16%"
+        mat-header-cell
+        *matHeaderCellDef>
+        Lugar de los hechos
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="16%"
+        *matCellDef="let rowData">
+        {{ rowData.nit }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="tiempo_sucediendo">
+      <mat-header-cell
+        fxFlex="15%"
+        *matHeaderCellDef>
+        Tiempo sucediendo
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="15%"
+        *matCellDef="let rowData">
+        <p>{{ rowData.timeHappen }}</p>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="empresa_conocimiento">
+      <mat-header-cell
+        fxFlex="16%"
+        *matHeaderCellDef>
+       Empresa con concocmiento
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="16%"
+        *matCellDef="let rowData">
+        rowData.companyknowledge
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="registrar_datos">
+      <mat-header-cell
+        fxFlex="15%"
+        *matHeaderCellDef>
+        Registro de datos
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="15%"
+        *matCellDef="let rowData">
+        <p>{{ rowData.registerData }}</p>
+      </mat-cell>
+    </ng-container>
+    <ng-container
+      matColumnDef="acciones">
+      <mat-header-cell
+        fxLayout="row"
+        fxLayoutAlign="end center"
+        fxFlex="10%"
+        *matHeaderCellDef>
+      </mat-header-cell>
+      <mat-cell
+        fxFlex="10%"
+        fxLayout="row"
+        fxLayoutAlign="end center"
+        *matCellDef="let rowData">
+        <button
+          matTooltip="Ver registro del usuario"
+          matTooltipPosition="left"
+          (click)="viewPQRData(rowData)"
+          mat-icon-button>
+          <mat-icon
+            class="repository-tratamiento-icon">remove_red_eye</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+  <mat-paginator
+    fxFill
+    [pageIndex]="dataSource.indexPage"
+    (page)="paginate($event)"
+    [length]="dataSource.totalItems"
+    [showFirstLastButtons]="true"
+    [pageSize]="dataSource.sizePage"
+    [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
+  </form>
+
+</div>

@@ -1,0 +1,87 @@
+<form
+ [formGroup]="form">
+  <h2 class="mat-h2">Nivel de endeudamiento</h2>
+  <mat-form-field
+    fxFill
+    appearance="outline">
+    <mat-label>Nivel de endeudamiento</mat-label>
+    <input
+      appUppercaseText
+      type="number"
+      matInput
+      placeholder="Este campo es requerido"
+      formControlName="nivel_endeudamiento">
+    <mat-error *ngIf="form.get('nivel_endeudamiento').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix="Este campo es requerido"
+        [errors]="form.get('nivel_endeudamiento').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field
+    fxFill
+    appearance="outline">
+    <mat-label>Pasivo total</mat-label>
+    <input
+      appUppercaseText
+      type="number"
+      matInput
+      placeholder="Escriba el pasivo total"
+      formControlName="pasivo_total">
+    <mat-error *ngIf="form.get('pasivo_total').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix="Este campo es requerido"
+        [errors]="form.get('pasivo_total').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <mat-divider></mat-divider>
+  <h2 class="mat-h2 margin-l">Liquidez</h2>
+  <mat-form-field
+    fxFill
+    appearance="outline">
+    <mat-label>Activo Corriente</mat-label>
+    <input
+      appUppercaseText
+      type="number"
+      matInput
+      placeholder="Escriba el pasivo total"
+      formControlName="activo_corriente">
+    <mat-error *ngIf="form.get('activo_corriente').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix="Este campo es requerido"
+        [errors]="form.get('activo_corriente').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field
+    fxFill
+    appearance="outline">
+    <mat-label>Pasivo Corriente</mat-label>
+    <input
+      appUppercaseText
+      type="number"
+      matInput
+      placeholder="Escriba el pasivo total"
+      formControlName="pasivo_corriente">
+    <mat-error *ngIf="form.get('pasivo_corriente').status === 'INVALID'">
+      <app-form-errors
+        errorPrefix="Este campo es requerido"
+        [errors]="form.get('pasivo_corriente').errors">
+      </app-form-errors>
+    </mat-error>
+  </mat-form-field>
+  <div
+    fxFill
+    class="terms-and-conditions"
+    fxLayout="row"
+    fxLayoutAlign="end end">
+    <button
+      color="accent"
+      matStepperNext
+      [disabled]="form.invalid"
+      mat-button>
+        SIGUIENTE
+    </button>
+  </div>
+</form>

@@ -1,0 +1,277 @@
+<mat-vertical-stepper
+  [linear]="true"
+  #stepper>
+  <mat-step
+    [stepControl]="form">
+    <form [formGroup]="form">
+      <ng-template matStepLabel>
+        Tarifa de Vinculación al servicio
+      </ng-template>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Categoría</mat-label>
+        <mat-select
+          required
+          placeholder="Selecciona una categoria"
+          formControlName="categoria">
+          <mat-option value="">
+            Seleccione una opción
+          </mat-option>
+          <mat-option
+            (click)="changeSelectionCategoria(option)"
+            *ngFor="let option of categoria$ | async"
+            [value]="option.id">
+            {{  option.description }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('categoria').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Seleccionar un elemento es requerido"
+            [errors]="form.get('categoria').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <table
+        class="margin-table"
+        fxFill
+        mat-table
+        [dataSource]="dataSourceForm1">
+        <ng-container
+          matColumnDef="instalacion_interna">
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+            Descripción
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element">
+            {{ element.description }}
+          </td>
+        </ng-container>
+        <ng-container
+          matColumnDef="cargo_conexion">
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+            Valor
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element">
+            {{ element.value }}
+          </td>
+        </ng-container>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayColumsVinculacion">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumsVinculacion;"></tr>
+      </table>
+      <div>
+        <button
+          [disabled]="form.invalid"
+          mat-button
+          matStepperNext>
+          Siguiente
+        </button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step
+    [stepControl]="form2">
+    <form
+      [formGroup]="form2">
+      <ng-template
+        matStepLabel>
+        Tarifas / simulación de financiación
+      </ng-template>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Plazo (meses) Max ({{ plazoMeses }})</mat-label>
+        <input
+          type="number"
+          matInput
+          placeholder="Escribe el plazo a diferir"
+          formControlName="plazo_meses">
+        <mat-error *ngIf="form2.get('plazo_meses').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form2.get('plazo_meses').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Cuota inicial</mat-label>
+        <input
+          type="number"
+          matInput
+          placeholder="Escribe la cuota inicial"
+          formControlName="cuota_inicial">
+        <mat-error *ngIf="form2.get('cuota_inicial').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form2.get('cuota_inicial').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <div>
+        <button
+          mat-button
+          matStepperPrevious>
+          Atras
+        </button>
+        <button
+          (click)="consultarFinanciacion()"
+          [disabled]="form.invalid || form2.invalid"
+          mat-button>
+          Consultar
+        </button>
+      </div>
+    </form>
+    <table
+      class="margin-table"
+      fxFill
+      mat-table
+      [dataSource]="dataSourceForm2">
+      <ng-container
+        matColumnDef="primera_cuouta">
+        <th
+          mat-header-cell
+          *matHeaderCellDef>
+          Primera cuota
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element">
+          {{ element.primeraCuota }}
+        </td>
+      </ng-container>
+      <ng-container
+        matColumnDef="cuota_normal">
+        <th
+          mat-header-cell
+          *matHeaderCellDef>
+          Cuota normal
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element">
+          {{ element.cuotaNormalEstimada }}
+        </td>
+      </ng-container>
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayColumsFinanciacion">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: displayColumsFinanciacion;"></tr>
+    </table>
+    <button
+      mat-button
+      matStepperNext>
+      SIGUIENTE
+    </button>
+  </mat-step>
+  <mat-step
+    [stepControl]="form3">
+    <form
+      [formGroup]="form3">
+      <ng-template
+        matStepLabel>
+          Simulación calculo de consumo
+      </ng-template>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Tipo gasodoméstico</mat-label>
+        <mat-select
+          multiple
+          required
+          placeholder="Seleccione"
+          formControlName="tipo_gasodomestico">
+            <mat-select-trigger>
+            <span *ngIf="form3.get('tipo_gasodomestico').value?.length >= 1" class="additional-selection">
+            ({{form3.get('tipo_gasodomestico').value?.length }} {{form3.get('tipo_gasodomestico').value?.length > 1 ? 'seleccionados' : 'seleccionado'}})
+            </span>
+            </mat-select-trigger>
+            <mat-option
+              (click)="changeSelectionGasodomestico(option)"
+              *ngFor="let option of gasodomesticType$ | async"
+              [value]="option.id">
+              {{  option.description }}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form3.get('tipo_gasodomestico').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Seleccionar un elemento es requerido"
+            [errors]="form3.get('tipo_gasodomestico').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <div>
+        <button
+          mat-button
+          matStepperPrevious>
+          Atras
+        </button>
+        <button
+          (click)="consultarCalculoConsumo()"
+          [disabled]="form.invalid || form2.invalid"
+          mat-button
+          matStepperNext>
+          Consultar
+        </button>
+      </div>
+    </form>
+    <table
+      class="margin-table"
+      fxFill
+      mat-table
+      [dataSource]="dataSourceForm3">
+      <ng-container
+        matColumnDef="consumo_estimado">
+        <th
+          mat-header-cell
+          *matHeaderCellDef>
+          Tipo Gasodómestico
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element">
+          {{ element.description }}
+        </td>
+      </ng-container>
+      <ng-container
+        matColumnDef="categoria">
+        <th
+          mat-header-cell
+          *matHeaderCellDef>
+          Categoría
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element">
+          {{ element.gasodomesticCategory.description }}
+        </td>
+      </ng-container>
+      <ng-container
+        matColumnDef="consumo">
+        <th
+          mat-header-cell
+          *matHeaderCellDef>
+          Consumo
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element">
+          {{ element.consumption }}
+        </td>
+      </ng-container>
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayColumsCalculoConsumo">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: displayColumsCalculoConsumo;"></tr>
+    </table>
+  </mat-step>
+</mat-vertical-stepper>

@@ -1,0 +1,39 @@
+<div>
+  <ng-container
+    *ngFor="let check of checkBox$ | async">
+    <div fxLayout="column"
+          fxLayoutAlign="center center">
+      <h2 class="mat-h2">{{ check.description }}</h2>
+      <div
+        fxLayoutGap="10px"
+        fxLayout="row wrap"
+        fxFill
+        fxLayoutAlign="center center">
+        <div fxLayoutGap="10px"
+              fxLayout="column"
+             fxLayoutAlign="center start">
+          <mat-checkbox
+            (change)="changedCheckBox($event, i, childCheck)"
+            *ngFor="let childCheck of check.specialities; index as i">
+             {{ childCheck.description  }}
+          </mat-checkbox>
+        </div>
+        <mat-divider class="margin-divider"></mat-divider>
+      </div>
+    </div>
+  </ng-container>
+  <div
+    fxFill
+    class="terms-and-conditions"
+    fxLayout="row"
+    fxLayoutAlign="end end">
+    <button
+      (click)="emitIds()"
+      color="accent"
+      matStepperNext
+      [disabled]="ArrayIdChecked.length === 0"
+      mat-button>
+      SIGUIENTE
+    </button>
+  </div>
+</div>

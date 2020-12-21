@@ -1,0 +1,38 @@
+<h3 mat-dialog-title>Subir archivo ZIP y descargar planilla</h3>
+  <div
+    mat-dialog-content>
+    <div
+      class="materia-border-radius height"
+      fxLayout="row"
+      fxLayoutGap="12px"
+      fxLayoutAlign="space-evenly center">
+      <div
+          >
+          <button
+            (click)="downloadPlanilla()"
+            color="accent"
+            mat-raised-button>
+            <mat-icon>insert_drive_file</mat-icon>
+              Descargar Planilla
+          </button>
+      </div>
+        <app-upload-multiple-files
+          [arrIcons]="null"
+          [percentWidth]="100"
+          [url]="urlToUpload"
+          [multiple]="false"
+          (sentIdFiles)="reciveIdFiles($event)"
+          [formControlFile]="fileControl"
+          accept="application/zip">
+        </app-upload-multiple-files>
+      </div>
+  </div>
+<div     fxLayout="row"
+         fxLayoutAlign="end end"
+         mat-dialog-actions>
+    <button
+      (click)="cerrar()"
+      mat-button>
+        CERRAR
+    </button>
+</div>

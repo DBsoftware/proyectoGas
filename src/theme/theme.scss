@@ -1,0 +1,73 @@
+@include mat-core();
+$dev-primary:  (
+  50: #ffffff,
+  100: #dde6f3,
+  200: #b4c9e4,
+  300: #7fa3d1,
+  400: #6992c9,
+  500: #5282c1,
+  600: #4072b4,
+  700: #38649d,
+  800: #305687,
+  900: #284770,
+  A100: #ffffff,
+  A200: #dde6f3,
+  A400: #6992c9,
+  A700: #38649d,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: $black-87-opacity,
+    A200: $black-87-opacity,
+    A400: $black-87-opacity,
+    A700: white,
+  )
+);
+
+$dev-secondary: (
+  50 : #edf5ea,
+  100 : #d2e5ca,
+  200 : #b5d4a7,
+  300 : #97c284,
+  400 : #80b569,
+  500 : #6aa84f,
+  600 : #62a048,
+  700 : #57973f,
+  800 : #4d8d36,
+  900 : #3c7d26,
+  A100 : #cdffbe,
+  A200 : #a6ff8b,
+  A400 : #7fff58,
+  A700 : #6cff3f,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: $black-87-opacity,
+    A200: $black-87-opacity,
+    A400: $black-87-opacity,
+    A700: white
+  )
+);
+
+$app-primary: mat-palette($dev-primary); // color principal del tema
+$app-accent : mat-palette($dev-secondary, 500); // la paleta de colores para los botones
+// The warn palette is optional (defaults to red).
+$app-warn : mat-palette($mat-red);
+// Create the theme object (a Sass map containing all of the palettes).
+$default-theme: mat-light-theme($app-primary, $app-accent, $app-warn);

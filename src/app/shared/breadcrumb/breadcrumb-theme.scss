@@ -1,0 +1,32 @@
+@import '~@angular/material/theming';
+
+
+@mixin breadcrumb-theme($theme) {
+
+  $background: map-get($theme, background); // obtenemos los colores del fondo
+  $foreground: map-get($theme, foreground);
+
+
+  #toolbar-breadcrumb{
+    background-color: mat-color($background, card) !important;
+  }
+
+  .text-miga-inactive {
+    font-weight: inherit !important;
+    pointer-events: none;
+  }
+  .text-miga {
+    font-weight: 400;
+  }
+  .text-miga:hover {
+    background-color: mat-color($background, hover);
+  }
+
+  .icon {
+    color: mat-color($foreground, icon);
+  }
+
+
+
+
+}

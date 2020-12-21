@@ -1,0 +1,14 @@
+.general-card-border {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.padding25 {
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+::ng-deep mat-tab-header {
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+}

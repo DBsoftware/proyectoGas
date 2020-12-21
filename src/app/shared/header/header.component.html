@@ -1,0 +1,41 @@
+<!--*ngIf="loading.loadingService$ | async"-->
+<!--<ng-container >
+  <mat-progress-bar
+    class="progress-bar"
+    color="accent"
+    mode="indeterminate">
+  </mat-progress-bar>
+</ng-container>-->
+<mat-toolbar
+  fxLayout="row"
+  fxLayoutAlign="start center"
+  class="mat-elevation-z4"
+  color="primary">
+  <button
+    (click)="toggle()"
+    mat-icon-button>
+    <mat-icon aria-label="Abrir menú">menu</mat-icon>
+  </button>
+  <h1 fxFlex>{{ companyName }}</h1>
+  <a
+    style="margin-right: 7px"
+    [routerLink]="'/'+ urlModule +'/perfil'"
+     matTooltipPosition="left"
+     color="accent"
+     matTooltip="Ver Perfil"
+     id="user-thumbnail-button"
+     mat-icon-button>
+    <div
+      id="user-thumbnail"
+      [style.background-image]="'url(' + avatar + ')'">
+    </div>
+  </a>
+  <a  mat-icon-button
+      matTooltipPosition="left"
+      matTooltip="Cerrar sesión"
+     (click)="_auth.logout()"
+     class="principal-link">
+    <mat-icon>exit_to_app</mat-icon>
+  </a>
+
+</mat-toolbar>

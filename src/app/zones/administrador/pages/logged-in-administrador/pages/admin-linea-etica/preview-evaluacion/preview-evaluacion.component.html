@@ -1,0 +1,228 @@
+<h1 class="mat-h1" mat-dialog-title>Previsualización del registro</h1>
+<div
+  mat-dialog-content>
+  <form
+    [formGroup]="form">
+      <mat-form-field
+        class="width-100"
+        appearance="outline">
+        <mat-label>Novedad</mat-label>
+        <textarea
+          readonly
+          cdkTextareaAutosize
+          type="text"
+          matInput
+          placeholder="Escribe la novedad lo mas explicito posible"
+          formControlName="novedad">
+          </textarea>
+        <mat-error *ngIf="form.get('novedad').status === 'INVALID'">
+      </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        class="width-100"
+        appearance="outline">
+        <input
+          readonly
+          matInput
+          formControlName="fecha_ocurrido"
+          placeholder="Seleccione la fecha en que se presentó la novedad">
+        <mat-error
+          *ngIf="form.get('fecha_ocurrido').status === 'INVALID'">
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        class="width-100"
+        appearance="outline">
+        <mat-label>Lugar de los hechos</mat-label>
+        <input
+          readonly
+          type="text"
+          matInput
+          placeholder="Escriba la ciudad y el lugar donde ocurrió la novedad"
+          formControlName="lugar_hechos">
+        <mat-error *ngIf="form.get('lugar_hechos').status === 'INVALID'">
+
+        </mat-error>
+      </mat-form-field>
+    <h2 class="mat-h2">Tiempo sucediendo</h2>
+    <mat-list>
+      <ng-container
+        *ngFor="let item of form.get('tiempo_sucediendo_select').value">
+        <mat-list-item>
+          {{item.description}}
+        </mat-list-item>
+      </ng-container>
+      <mat-divider  style="margin-bottom: 20px;"></mat-divider>
+    </mat-list>
+    <div
+      fxLayout="column"
+      fxLayoutGap="7px"
+      fxLayoutAlign="end center">
+      <span>¿La empresa tiene conocimiento?</span>
+      <mat-radio-group
+        formControlName="radio_conocimiento_empresa"
+        fxLayoutGap="12px">
+        <mat-radio-button [value]="'SI'">Si</mat-radio-button>
+        <mat-radio-button [value]="'NO'">No</mat-radio-button>
+        <mat-radio-button [value]="'NO_SE'">No sé</mat-radio-button>
+      </mat-radio-group>
+    </div>
+      <mat-form-field
+        class="width-100"
+        appearance="outline">
+        <mat-label>Nombre y apellidos con conocimiento en la empresa separados por (,)</mat-label>
+        <input
+          readonly
+          type="text"
+          matInput
+          placeholder="Escriba el tiempo en número de días"
+          formControlName="nombres_personas_concimento_empresa">
+        <mat-error *ngIf="form.get('nombres_personas_concimento_empresa').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('nombres_personas_concimento_empresa').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+    <div
+      fxLayout="column"
+      fxLayoutGap="7px"
+      fxLayoutAlign="end center">
+        <span>¿Desea registrar sus datos?</span>
+        <mat-radio-group
+          fxLayoutGap="12px"
+          formControlName="radio_desea_registrar_datos">
+            <mat-radio-button [value]="'SI'">Si</mat-radio-button>
+            <mat-radio-button [value]="'NO'">No</mat-radio-button>
+        </mat-radio-group>
+    </div>
+      <div fxLayout="row"
+           fxLayoutGap="6px"
+           fxFill>
+        <mat-form-field
+          class="width-100"
+          appearance="outline">
+          <mat-label>Primer nombre cliente</mat-label>
+          <input
+            readonly
+            type="text"
+            matInput
+            placeholder="Escriba el primer nombre del cliente"
+            formControlName="cliente_nombre">
+          <mat-error *ngIf="form.get('cliente_nombre').status === 'INVALID'">
+            <app-form-errors
+              errorPrefix="Este campo es requerido"
+              [errors]="form.get('cliente_nombre').errors">
+            </app-form-errors>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field
+          class="width-100"
+          appearance="outline">
+          <mat-label>Segundo nombre cliente cliente</mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="Escribe el segundo del nombre cliente"
+            formControlName="cliente_nombre2">
+          <mat-error *ngIf="form.get('cliente_nombre2').status === 'INVALID'">
+
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        fxLayout="row"
+        fxLayoutGap="6px"
+        fxFill>
+        <mat-form-field
+          class="width-100"
+          appearance="outline">
+          <mat-label>Primer apellido cliente</mat-label>
+          <input
+            readonly
+            type="text"
+            matInput
+            placeholder="Escribe el primer apellido del cliente"
+            formControlName="cliente_apellido">
+          <mat-error *ngIf="form.get('cliente_apellido').status === 'INVALID'">
+            <app-form-errors
+              errorPrefix="Este campo es requerido"
+              [errors]="form.get('cliente_apellido').errors">
+            </app-form-errors>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field
+          class="width-100"
+          appearance="outline">
+          <mat-label>Segundo apellido cliente</mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="Escribe el primer apellido del cliente"
+            formControlName="cliente_apellido2">
+          <mat-error *ngIf="form.get('cliente_apellido2').status === 'INVALID'">
+          </mat-error>
+        </mat-form-field>
+      </div>
+    <h2 class="mat-h2">Grupo de interes</h2>
+    <mat-list>
+      <ng-container
+        *ngFor="let item of form.get('grupo_interes').value">
+        <mat-list-item>
+          {{item.description}}
+        </mat-list-item>
+      </ng-container>
+      <mat-divider  style="margin-bottom: 20px;"></mat-divider>
+    </mat-list>
+      <mat-form-field
+        class="width-100"
+        appearance="outline">
+        <mat-label>Otro grupo de interes, ¿Cuál?</mat-label>
+        <input
+          readonly
+          type="text"
+          matInput
+          placeholder="Escriba aquí otro grupo de interés"
+          formControlName="otro_grupo">
+        <mat-error *ngIf="form.get('otro_grupo').status === 'INVALID'">
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        class="width-100"
+        appearance="outline">
+        <mat-label>Teléfono</mat-label>
+        <input
+          readonly
+          type="tel"
+          matInput
+          placeholder="Escribe el teléfono"
+          formControlName="telefono">
+        <mat-error *ngIf="form.get('telefono').status === 'INVALID'">
+
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        class="width-100"
+        appearance="outline">
+        <mat-label>Correo</mat-label>
+        <input
+          readonly
+          type="email"
+          matInput
+          placeholder="Escribe el correo electrónico"
+          formControlName="correo">
+        <mat-error *ngIf="form.get('correo').status === 'INVALID'">
+
+        </mat-error>
+      </mat-form-field>
+  </form>
+</div>
+<div
+  fxLayout="row"
+  fxLayoutGap="end center"
+  mat-dialog-actions>
+  <button
+      (click)="cerrar()"
+      mat-button
+      mat-dialog-close>Cerrar</button>
+</div>

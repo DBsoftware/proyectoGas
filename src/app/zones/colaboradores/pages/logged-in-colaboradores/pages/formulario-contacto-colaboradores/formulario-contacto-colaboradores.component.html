@@ -1,0 +1,93 @@
+
+<div
+  fxLayoutAlign="center start"
+  fxLayout="row">
+  <form
+    fxLayoutGap="10px"
+    fxLayout="column"
+    fxLayoutAlign="center start"
+    class="mat-elevation-z2 padding25 general-card-border"
+    [formGroup]="form">
+    <h1 class="mat-h1">{{ appName }} - Formulario de contacto</h1>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Categoría</mat-label>
+      <mat-select
+        required
+        placeholder="Selecciona una categoría"
+        formControlName="categoria">
+        <mat-option value="">
+          Seleccione una opción
+        </mat-option>
+        <mat-option *ngFor="let option of categoria$ | async"
+                    [value]="option.id">
+          {{  option.description }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('categoria').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Seleccionar un tipo de identificación es requerido"
+          [errors]="form.get('categoria').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Observaciones</mat-label>
+      <textarea
+        cdkTextareaAutosize
+        required
+        type="text"
+        matInput
+        placeholder="Escriba sus observaciones aquí"
+        formControlName="observaciones"></textarea>
+      <mat-error *ngIf="form.get('observaciones').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('observaciones').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <app-upload-multiple-files
+      fxFill
+      [percentWidth]="98"
+      [arrIcons]="null"
+      [multiple]="true"
+      (sentIdFiles)="reciveIdFiles($event)"
+      [url]="urlToUpload"
+      [formControlFile]="form.get('adjuntos')">
+    </app-upload-multiple-files>
+    <div
+      fxFill
+      fxLayout="column"
+      fxLayoutGap="12px"
+      fxLayoutAlign="center center">
+      <app-autorizacion-tratamiento
+        (sendIdPolitic)="reciveIdPolitic($event)"
+        fxLayout="column"
+        fxLayoutGap="7px"
+        fxLayoutAlign="center center"
+        [control]="form.get('autorizacion')">
+      </app-autorizacion-tratamiento>
+      <re-captcha
+        formControlName="recaptcha"
+        (resolved)="recaptchaResolved($event)">
+      </re-captcha>
+    </div>
+    <div
+      fxFill
+      class="terms-and-conditions"
+      fxLayout="row"
+      fxLayoutAlign="end end">
+      <button
+        color="accent"
+        mat-raised-button
+        (click)="guardar()"
+        [disabled]="form.invalid || (_loadingService.getHTTPStatus() | async)"
+        mat-button>
+        ENVIAR
+      </button>
+    </div>
+  </form>
+</div>
+

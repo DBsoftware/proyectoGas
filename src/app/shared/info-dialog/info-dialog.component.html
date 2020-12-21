@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  <ng-container>
+    <ul>
+      <li *ngFor="let err of data.content">
+        {{err.defaultMessage}}
+      </li>
+    </ul>
+  </ng-container>
+</div>
+<div fxLayout="row" fxLayoutAlign="end center" mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Ok</button>
+</div>

@@ -1,0 +1,66 @@
+<div mat-dialog-content>
+  <h1 class="mat-headline">Añadir código de suscripción</h1>
+  <form
+    [formGroup]="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Relación con la propiedad</mat-label>
+      <mat-select
+        placeholder="Relación con la propiedad"
+        formControlName="relationshipPropertyId">
+        <mat-option value="">
+          Seleccione una opción
+        </mat-option>
+        <mat-option *ngFor="let option of relacion_propiedad$ | async"
+                    [value]="option.relationshipPropertyId">
+          {{ option.description }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('relationshipPropertyId').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('relationshipPropertyId').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Código de suscripción</mat-label>
+      <input formControlName="code"
+             matInput
+             placeholder="Introduce tu nueva contraseña"
+             required
+             type="text">
+      <mat-error *ngIf="form.get('code').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('code').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Dirección</mat-label>
+      <input formControlName="address"
+             matInput
+             placeholder="Introduce tu nueva contraseña"
+             required
+             type="text">
+      <mat-error *ngIf="form.get('address').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('address').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div
+  fxLayout="row"
+  fxLayoutAlign="space-between center"
+  mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">CANCELAR</button>
+  <button
+    (click)="createCode()"
+    mat-button
+    color="accent"
+    [disabled]="form.invalid || ( _loading.getHTTPStatus() | async)"
+    cdkFocusInitial>AÑADIR CÓDIGO</button>
+</div>

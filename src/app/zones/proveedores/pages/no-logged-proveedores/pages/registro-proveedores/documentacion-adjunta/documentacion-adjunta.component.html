@@ -1,0 +1,67 @@
+
+<div
+  fxLayout="row"
+  fxLayoutGap="2%"
+  fxFill
+fxLayoutAlign="start start">
+  <mat-list
+    fxFlex="30%"
+    class="materia-border-radius">
+    <h3 mat-subheader>Descargar formularios</h3>
+    <mat-divider class="margin-divider"></mat-divider>
+    <ng-container
+      *ngFor="let item of listInstruccions$ | async; let last = last">
+      <mat-list-item>
+        <mat-icon
+          color="warn"
+          mat-list-icon>
+          picture_as_pdf
+        </mat-icon>
+        <a class="a-download" (click)="viewPDF(item.file)">
+          {{ item.description }}
+        </a>
+      </mat-list-item>
+      <mat-divider
+        *ngIf="!last">
+      </mat-divider>
+    </ng-container>
+  </mat-list>
+  <div
+    fxFlex="70%"
+    fxLayout="column"
+    fxLayoutAlign="start center"
+    class="materia-border-radius">
+    <div
+      *ngFor="let conf of listarInputsFiles$ | async; let last = last"
+      class="container-upload-file">
+      <h2 class="mat-h2">{{ conf.description }}</h2>
+      <app-upload-multiple-files
+        accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        [arrIcons]="metadataFiles"
+        [percentWidth]="80"
+        [multiple]="false"
+        (sentIdFiles)="recivedIdfiles($event, conf.id)"
+        [formControlFile]="form.get(conf.description)"
+        [url]="urlToUpload">
+      </app-upload-multiple-files>
+      <mat-divider
+        class="mat-divider-class"
+        *ngIf="!last">
+      </mat-divider>
+    </div>
+    <app-autorizacion-tratamiento
+      style="margin-bottom: 15px"
+      (sendIdPolitic)="reciveIdPolitic($event)"
+      fxLayout="column"
+      fxLayoutGap="7px"
+      fxLayoutAlign="center center"
+      [control]="form.get('autorizacion')">
+    </app-autorizacion-tratamiento>
+    <re-captcha
+      (resolved)="recaptchaF($event)"
+      [formControl]="form.get('recaptcha')">
+    </re-captcha>
+  </div>
+
+</div>
+

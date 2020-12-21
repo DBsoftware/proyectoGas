@@ -1,0 +1,62 @@
+<div
+  fxLayout="row"
+  class="container-card"
+  fxLayoutAlign="center start">
+  <mat-horizontal-stepper
+    class="mat-elevation-z2 card-ventas general-card-border card-width"
+    [linear]="false">
+    <mat-step
+      [stepControl]="form">
+      <ng-template matStepLabel>Información General</ng-template>
+      <app-general-info
+        (ArrPhones)="ArrPhones=$event"
+        [form]="form">
+      </app-general-info>
+    </mat-step>
+    <mat-step
+      [stepControl]="form2">
+      <ng-template matStepLabel>Información tributaria</ng-template>
+      <app-informacion-tributaria
+        [form]="form2">
+      </app-informacion-tributaria>
+    </mat-step>
+    <mat-step
+      [stepControl]="form3">
+      <ng-template matStepLabel>Clasificación financiera</ng-template>
+      <app-clasificacion-financiera
+        [form]="form3">
+      </app-clasificacion-financiera>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Clasificación proveedor</ng-template>
+      <app-clasificacion-proveedor
+        (idCheckBox)="reciveIdCheckbox($event)">
+      </app-clasificacion-proveedor>
+    </mat-step>
+    <mat-step
+      [stepControl]="form5">
+      <ng-template matStepLabel>Documentación adjunta</ng-template>
+      <app-documentacion-adjunta
+        (recaptcha)="recaptcha=$event"
+        (idPolitic)="idPolitic=$event"
+        (fielIdAndFiles)="reciveIdAndFiles($event)"
+        [form]="form5">
+      </app-documentacion-adjunta>
+      <div
+        fxFill
+        class="terms-and-conditions"
+        fxLayout="row"
+        fxLayoutAlign="end end">
+          <button
+            (click)="crearProveedor()"
+            style="margin-top: 20px"
+            [disabled]="form.invalid || form2.invalid || form3.invalid || form5.invalid || clasificacionArray.length <= 10 || (_loading.getHTTPStatus() | async)"
+            color="accent"
+            mat-raised-button
+            mat-button>
+              REGISTRAR
+          </button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

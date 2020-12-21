@@ -1,0 +1,174 @@
+<form [formGroup]="form">
+
+  <mat-form-field
+    appearance="outline">
+    <mat-label>Identificación</mat-label>
+    <input
+      readonly
+      required
+      type="number"
+      matInput
+      placeholder="Escribe tu identificación"
+      formControlName="identificacion_tributaria">
+  </mat-form-field>
+  <mat-form-field
+    appearance="outline">
+    <mat-label>Razón Social</mat-label>
+    <input
+      readonly
+      required
+      type="text"
+      matInput
+      placeholder="Escribe tu razón social"
+      formControlName="razon_social">
+  </mat-form-field>
+  <div fxLayout="row"
+       fxLayoutGap="6px"
+       fxFill>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Primer nombre representante legal</mat-label>
+      <input
+        readonly
+        required
+        type="text"
+        matInput
+        placeholder="Primer nombre representante legal"
+        formControlName="representante_legal_nombre">
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Segundo nombre representante legal</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Escribe el segundo del nombre representante legal"
+        formControlName="representante_legal_nombre2">
+    </mat-form-field>
+  </div>
+  <div
+    fxLayout="row"
+    fxLayoutGap="6px"
+    fxFill>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Primer apellido representante legal</mat-label>
+      <input
+        readonly
+        required
+        type="text"
+        matInput
+        placeholder="Escribe el primer apellido representante legal"
+        formControlName="representante_legal_apellido">
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Segundo apellido representante legal</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Escribe el primer apellido representante legal"
+        formControlName="representante_legal_apellido2">
+    </mat-form-field>
+  </div>
+  <mat-form-field
+    appearance="outline">
+    <mat-label>Email</mat-label>
+    <input
+      readonly
+      required
+      type="email"
+      matInput
+      placeholder="Escribe el email"
+      formControlName="email">
+  </mat-form-field>
+  <mat-form-field
+    appearance="outline">
+    <mat-label>Número telefónico</mat-label>
+    <input
+      required
+      type="number"
+      matInput
+      placeholder="Escriba su número telefónico"
+      formControlName="numero_telefonico">
+  </mat-form-field>
+  <mat-form-field
+    appearance="outline">
+    <mat-label>Celular</mat-label>
+    <input
+      readonly
+      required
+      type="number"
+      matInput
+      placeholder="Escriba su número celular"
+      formControlName="celular">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Departamento</mat-label>
+    <input
+      readonly
+      required
+      formControlName="departamento"
+      type="text"
+      matInput
+      [matAutocomplete]="departamentoAuto"
+      placeholder="Escribe el daparamento a buscar">
+    <mat-autocomplete
+      (closed)="_autoComplete.compareValueWithSelectionState(form.get('departamento'), form.get('municipio'))"
+      #departamentoAuto="matAutocomplete">
+      <mat-option
+        (onSelectionChange)="_autoComplete.seeSelectionObject(option, 'departamento')"
+        #options
+        *ngFor="let option of filteredState$ | async"
+        [value]="option.description">
+        {{ option.description }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field
+    appearance="outline">
+    <mat-label>Municipio</mat-label>
+    <input
+      readonly
+      required
+      formControlName="municipio"
+      type="text"
+      matInput
+      [matAutocomplete]="municipioAuto"
+      placeholder="Escribe el municipio a buscar">
+    <mat-autocomplete
+      (closed)="_autoComplete.compareValueWithSelection(form.get('municipio'))"
+      #municipioAuto="matAutocomplete">
+      <mat-option
+        (onSelectionChange)="_autoComplete.seeSelectionObject(option, 'municipio')"
+        #options
+        *ngFor="let option of filteredMunicipio$ | async"
+        [value]="option.description">
+        {{ option.description }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field
+    appearance="outline">
+    <mat-label>Dirección</mat-label>
+    <input
+      readonly
+      matInput
+      required
+      type="text"
+      placeholder="Escribe tu dirección"
+      formControlName="direccion">
+  </mat-form-field>
+  <div
+    fxFill
+    class="terms-and-conditions"
+    fxLayout="row"
+    fxLayoutAlign="end end">
+    <button
+      color="accent"
+      matStepperNext
+      mat-button>
+      SIGUIENTE
+    </button>
+  </div>
+</form>

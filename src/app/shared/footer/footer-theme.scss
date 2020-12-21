@@ -1,0 +1,14 @@
+@import '~@angular/material/theming';
+
+
+@mixin footer-theme($theme) {
+    $accent: map-get($theme, accent);
+    $primary: map-get($theme, primary);
+    $background: map-get($theme, background);
+
+  #footer {
+    background-color: mat-color($primary);
+    color: mat-color($background, card);
+  }
+
+}

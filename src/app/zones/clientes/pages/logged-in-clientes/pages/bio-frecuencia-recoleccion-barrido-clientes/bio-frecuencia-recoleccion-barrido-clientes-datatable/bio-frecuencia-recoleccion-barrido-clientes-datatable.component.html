@@ -1,0 +1,43 @@
+<div *ngIf="dataDatable" class="materia-border margin-card-consultas">
+  <mat-table #table [dataSource]="dataDatable">
+    <ng-container matColumnDef="frecuencia">
+      <mat-header-cell
+        *matHeaderCellDef>
+        Frecuencia
+      </mat-header-cell>
+      <mat-cell
+        *matCellDef="let rowData">
+        <div fxLayout="row"
+             fxLayoutGap="5px"
+             fxLayoutAlign="start center">
+          <span>{{ rowData.frequency }}</span>
+        </div>
+      </mat-cell>
+    </ng-container>
+    <ng-container
+      matColumnDef="acciones">
+      <mat-header-cell
+        fxLayout="row"
+        fxLayoutAlign="end center"
+        *matHeaderCellDef>
+        Acciones
+      </mat-header-cell>
+      <mat-cell
+        fxLayout="row"
+        fxLayoutAlign="end center"
+        *matCellDef="let rowData">
+        <button
+          (click)="showLocation(rowData)"
+          matTooltip="Ver ubicación"
+          matTooltipPosition="right"
+          mat-icon-button>
+          <mat-icon class="repository-tratamiento-icon">place</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+</div>

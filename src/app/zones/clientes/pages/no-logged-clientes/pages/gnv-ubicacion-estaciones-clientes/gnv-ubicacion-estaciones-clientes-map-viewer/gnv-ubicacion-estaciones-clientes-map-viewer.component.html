@@ -1,0 +1,29 @@
+<div
+  *ngIf="mapData"
+  class="map-container"
+  #map_container>
+  <agm-map
+    (mapReady)="mapReady($event)"
+    [style.height.px]="map_container.offsetHeight"
+    [latitude]="mapData.latitude"
+    [longitude]="mapData.longitude">
+    <agm-marker
+      [latitude]="mapData.lat"
+      [longitude]="mapData.long">
+      <agm-info-window
+        [isOpen]="true"
+        #infoWindow>
+        <div fxLayout="column"
+             fxLayoutGap="5px"
+             fxLayoutAlign="start center">
+          <img class="img-marker" src="{{ mapData.logo }}">
+          <h2>{{ mapData.estacion }}</h2>
+          <p>{{ mapData.direccion }}</p>
+        </div>
+        <ul>
+          <li>Teléfonos: {{ mapData.telefono }}</li>
+        </ul>
+      </agm-info-window>
+    </agm-marker>
+  </agm-map>
+</div>

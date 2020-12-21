@@ -1,0 +1,19 @@
+<h3 mat-dialog-title></h3>
+<div mat-dialog-content fxLayout="column">
+
+  <div id="pdf-object-container"
+       *ngIf="!loadingFile">
+    <object
+            name="pdf"
+            [attr.data]="getPDF()"
+            type="application/pdf"
+            width="100%"
+            height="100%">
+      <p>Este navegador no soporta PDF's haz clic <a [href]="getPDF()">aquí</a>
+        para descargarlo.
+      </p>
+    </object>
+  </div>
+</div>
+<div mat-dialog-actions>
+</div>

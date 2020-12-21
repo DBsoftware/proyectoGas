@@ -1,0 +1,18 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="over">
+    <app-menu
+      [zoneId]="zoneId"
+      [inicioRoute]="routeInit"
+      [sideNav]="sidenav">
+    </app-menu>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-navbar-no-logged
+      [sideNav]="sidenav">
+    </app-navbar-no-logged>
+    <div id="router-container">
+      <router-outlet></router-outlet>
+    </div>
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

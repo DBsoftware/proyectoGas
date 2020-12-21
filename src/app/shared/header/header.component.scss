@@ -1,0 +1,20 @@
+.progress-bar {
+  position:fixed;
+}
+mat-toolbar {
+    img{
+      padding-top: 10px;
+    }
+  #user-thumbnail-button {
+
+    cursor: pointer;
+
+    #user-thumbnail {
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 40px;
+      width: 40px;
+      border-radius: 100%;
+    }
+  }
+}

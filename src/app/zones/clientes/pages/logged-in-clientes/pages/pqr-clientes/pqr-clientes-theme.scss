@@ -1,0 +1,15 @@
+@import '~@angular/material/theming';
+
+@mixin pqr-clientes-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  .card-pqr {
+    background-color: mat-color($background, card);
+  }
+
+  .files-container-pqr {
+    border: 1px solid mat-color($foreground, divider);
+    border-radius: 7px;
+  }
+
+}

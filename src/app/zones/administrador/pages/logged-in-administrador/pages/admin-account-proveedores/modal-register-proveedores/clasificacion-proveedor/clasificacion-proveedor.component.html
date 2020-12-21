@@ -1,0 +1,10 @@
+<h2 class="mat-h2">Lista de clasificación</h2>
+<mat-list>
+  <ng-container
+    *ngFor="let item of list">
+    <mat-list-item>
+      {{item.description}}
+    </mat-list-item>
+  </ng-container>
+  <mat-divider  style="margin-bottom: 20px;"></mat-divider>
+</mat-list>

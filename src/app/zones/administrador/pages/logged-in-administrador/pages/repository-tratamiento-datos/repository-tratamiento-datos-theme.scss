@@ -1,0 +1,11 @@
+@import '~@angular/material/theming';
+
+@mixin repository-tratamiento-datos-theme($theme) {
+  $foreground: map_get($theme, foreground);
+  .repository-tratamiento-icon {
+    color: mat-color($foreground, icon)
+  }
+  .file-name:hover {
+    color: mat-color($foreground, icon);
+  }
+}

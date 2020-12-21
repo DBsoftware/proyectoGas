@@ -1,0 +1,185 @@
+<h1 class="mat-h1">Modificar Dirección</h1>
+<div
+  mat-dialog-content>
+<form
+  [formGroup]="form"
+  fxLayout="row"
+  fxLayoutGap="6px"
+  fxLayoutAlign="center center">
+   <div
+   fxLayout="column"
+   fxLayoutAlign="start center">
+     Ejemplo: CR
+  <mat-form-field
+    appearance="outline">
+    <mat-select
+      required
+      formControlName="tipo_via_principal"
+      placeholder="Seleccione un complemento">
+      <mat-option value="">
+        Seleccione una opción
+      </mat-option>
+     <!-- <mat-option
+        (click)="changeSelectionCategoria(option)"
+        *ngFor="let option of categoria$ | async"
+        [value]="option.id">
+        {{  option.description }}
+      </mat-option> -->
+    </mat-select>
+  </mat-form-field>
+   </div>
+  <div
+    fxLayout="column"
+    fxLayoutAlign="start center">
+    101
+    <mat-form-field
+      class="input-width"
+      appearance="outline">
+      <mat-label>Nº</mat-label>
+      <input
+        formControlName="numero_via_principal"
+        placeholder=""
+        matInput
+        type="number">
+    </mat-form-field>
+  </div>
+  <div
+    fxLayout="column"
+    fxLayoutAlign="start center">
+    A
+    <mat-form-field
+      class="select-width"
+      appearance="outline">
+      <mat-label></mat-label>
+      <mat-select
+        formControlName="primera_letra_via_principal"
+        placeholder="Seleccione un complemento">
+        <mat-option value="">
+          Seleccione una opción
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div
+    fxLayout="column"
+    fxLayoutAlign="start center">
+    BIS
+    <mat-form-field
+      class="select-width"
+
+      appearance="outline">
+      <mat-label></mat-label>
+      <mat-select
+        formControlName="segunda_letra_via_principal"
+        placeholder="Seleccione un complemento">
+        <mat-option value="">
+          Seleccione una opción
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div
+    fxLayout="column"
+    fxLayoutAlign="start center">
+    A
+    <mat-form-field
+      class="select-width"
+      appearance="outline">
+      <mat-label></mat-label>
+      <mat-select
+        formControlName="tercera_letra_via_principal"
+        placeholder="Seleccione un complemento">
+        <mat-option value="">
+          Seleccione una opción
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div
+    fxLayout="column"
+    fxLayoutAlign="start center">
+    Sur
+    <mat-form-field
+      class="select-width"
+
+      appearance="outline">
+      <mat-label></mat-label>
+      <mat-select
+        placeholder="Seleccione un complemento">
+        <mat-option value="">
+          Seleccione una opción
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  No.
+  <div
+    fxLayout="column"
+    fxLayoutAlign="start center">
+    69
+    <mat-form-field
+      class="input-width"
+      appearance="outline">
+      <mat-label>Nº</mat-label>
+      <input
+        placeholder=""
+        matInput
+        type="number">
+    </mat-form-field>
+  </div>
+  <div
+    fxLayout="column"
+    fxLayoutAlign="start center">
+    A
+    <mat-form-field
+      class="select-width"
+      appearance="outline">
+      <mat-label></mat-label>
+      <mat-select
+        placeholder="Seleccione un complemento">
+        <mat-option value="">
+          Seleccione una opción
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div
+    fxLayout="column"
+    fxLayoutAlign="start center">
+    26
+    <mat-form-field
+      class="input-width"
+      appearance="outline">
+      <mat-label>Nº</mat-label>
+      <input
+        placeholder=""
+        matInput
+        type="number">
+    </mat-form-field>
+  </div>
+  <div
+    fxLayout="column"
+    fxLayoutAlign="start center">
+    A
+    <mat-form-field
+      class="select-width"
+      appearance="outline">
+      <mat-label></mat-label>
+      <mat-select
+        placeholder="Seleccione un complemento">
+        <mat-option value="">
+          Seleccione una opción
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <mat-form-field
+    appearance="outline">
+    <mat-label>Dirección generada</mat-label>
+      <input
+        type="text"
+        matInput>
+  </mat-form-field>
+
+</form>
+</div>

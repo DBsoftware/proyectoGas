@@ -1,0 +1,170 @@
+<div
+  fxLayoutAlign="center center"
+  fxLayout="row">
+
+  <mat-tab-group
+    backgroundColor="primary"
+    color="accent"
+    [selectedIndex]="0"
+    mat-stretch-tabs
+    class="general-card-border mat-elevation-z4">
+    <mat-tab
+      label="Consultar por código cliente">
+      <form
+        class="padding25"
+        [formGroup]="form"
+        fxLayout="column"
+        fxLayoutGap="5px"
+        fxLayoutAlign="start center">
+        <div
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          fxLayoutGap="10px">
+          <mat-form-field
+            appearance="outline">
+            <mat-label>Código de cliente</mat-label>
+            <mat-select
+              required
+              placeholder="Código de cliente"
+              formControlName="codigo_cliente">
+              <mat-option value="">
+                Seleccione una opción
+              </mat-option>
+              <mat-option *ngFor="let item of codigoCliente$ | async" [value]="item.code">
+                {{ item.code }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('codigo_cliente').status === 'INVALID'">
+              <app-form-errors
+                errorPrefix="Debe seleccionar un código de cliente"
+                [errors]="form.get('codigo_cliente').errors">
+              </app-form-errors>
+            </mat-error>
+          </mat-form-field>
+          <button
+            class="btn-consultar"
+            fxFlexAlign="center"
+            (click)="consultar()"
+            [disabled]="form.invalid || deactiveButton || (_loading.getHTTPStatus()  | async)"
+            color="accent"
+            mat-raised-button>
+            CONSULTAR
+          </button>
+        </div>
+        <app-datatable-consultas-fecha-entrega-factura-clientes
+          [displayedColumns]="['expireDate', 'number']"
+          [userId]="userId"
+          [codigoCliente]="form.get('codigo_cliente').value"
+          [filterbyMunicipio]="false"
+          class="consultas-datatable"
+          [dataDatable]="datatable">
+        </app-datatable-consultas-fecha-entrega-factura-clientes>
+        <div
+          fxFill
+          fxLayoutAlign="center center"
+          fxLayout="row">
+          <re-captcha
+            [formControl]="form.get('recaptcha')"
+            (resolved)="resolvedRecaptcha($event)">
+          </re-captcha>
+        </div>
+
+      </form>
+    </mat-tab>
+    <mat-tab label="Consultar por  municipio y barrio">
+      <form
+        fxLayout="column"
+        fxFlexAlign="start center"
+        class="padding25"
+        [formGroup]="form2">
+        <div fxLayout="row"
+             fxLayoutAlign="start center"
+             fxLayoutGap="10px">
+          <mat-form-field appearance="outline">
+            <mat-label>Municipio</mat-label>
+            <input
+              required
+              formControlName="municipio"
+              type="text"
+              matInput
+              [matAutocomplete]="municipioAuto"
+              placeholder="Escribe el municipio">
+            <mat-autocomplete
+              (optionSelected)="selectMunicipio($event)"
+              (closed)="closedAuto('municipio')"
+              #municipioAuto="matAutocomplete">
+              <mat-option
+                (click)="clicMunicipio(option)"
+                #options
+                *ngFor="let option of filteredMunicipio$ | async"
+                [value]="option.townName ? option.townName : option.description">
+                {{option.townName ? option.townName : option.description }}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="form2.get('municipio').status === 'INVALID'">
+              <app-form-errors
+                errorPrefix="Este campo es requerido"
+                [errors]="form2.get('municipio').errors">
+              </app-form-errors>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Barrio</mat-label>
+            <input
+              required
+              formControlName="barrio"
+              type="text"
+              matInput
+              [matAutocomplete]="barrioAuto"
+              placeholder="Escriba la el barrio">
+            <mat-autocomplete
+              (closed)="closedAuto('barrio')"
+              (optionSelected)="selectBarrio($event)"
+              #barrioAuto="matAutocomplete">
+              <mat-option
+                (click)="clicBarrio(option)"
+                *ngFor="let option of filteredBarrio$ | async"
+                [value]="option.name ? option.name : option.description">
+                {{option.name ? option.name : option.description }}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="form2.get('barrio').status === 'INVALID'">
+              <app-form-errors
+                errorPrefix="Este campo es requerido"
+                [errors]="form2.get('barrio').errors">
+              </app-form-errors>
+            </mat-error>
+          </mat-form-field>
+          <button
+            class="btn-consultar"
+            (click)="consultar2()"
+            [disabled]="form2.invalid || deactiveButton2 || (!selectedIdMunicipio || !selectedIdBarrio) ||  (_loading.getHTTPStatus()  | async)"
+            color="accent"
+            mat-raised-button>
+            CONSULTAR
+          </button>
+        </div>
+        <app-datatable-consultas-fecha-entrega-factura-clientes
+          [displayedColumns]="['expireDate', 'suspensionDate']"
+          [SelectedIdMunicipio]="selectedIdMunicipio"
+          [SelectedIdBarrio]="selectedIdBarrio"
+          [filterbyMunicipio]="true"
+          class="consultas-datatable"
+          [dataDatable]="datatable2">
+        </app-datatable-consultas-fecha-entrega-factura-clientes>
+        <div
+          fxFill
+          fxLayoutAlign="center center"
+          fxLayout="row">
+          <re-captcha
+            [formControl]="form2.get('recaptcha')"
+            (resolved)="resolvedRecaptcha2($event)">
+          </re-captcha>
+        </div>
+      </form>
+    </mat-tab>
+  </mat-tab-group>
+
+</div>
+
+

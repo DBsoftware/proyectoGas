@@ -1,0 +1,63 @@
+<form
+  [formGroup]="form">
+  <h2 class="mat-h2">Nivel de endeudamiento</h2>
+  <mat-form-field
+    fxFill
+    appearance="outline">
+    <mat-label>Nivel de endeudamiento</mat-label>
+    <input
+      readonly
+      type="number"
+      matInput
+      placeholder="Este campo es requerido"
+      formControlName="nivel_endeudamiento">
+  </mat-form-field>
+  <mat-form-field
+    fxFill
+    appearance="outline">
+    <mat-label>Pasivo total</mat-label>
+    <input
+      readonly
+      type="number"
+      matInput
+      placeholder="Escriba el pasivo total"
+      formControlName="pasivo_total">
+  </mat-form-field>
+  <mat-divider></mat-divider>
+  <h2 class="mat-h2 margin-l">Liquidez</h2>
+  <mat-form-field
+    fxFill
+    appearance="outline">
+    <mat-label>Activo Corriente</mat-label>
+    <input
+      readonly
+      type="number"
+      matInput
+      placeholder="Escriba el pasivo total"
+      formControlName="activo_corriente">
+  </mat-form-field>
+  <mat-form-field
+    fxFill
+    appearance="outline">
+    <mat-label>Pasivo Corriente</mat-label>
+    <input
+      readonly
+      type="number"
+      matInput
+      placeholder="Escriba el pasivo total"
+      formControlName="pasivo_corriente">
+  </mat-form-field>
+  <div
+    fxFill
+    class="terms-and-conditions"
+    fxLayout="row"
+    fxLayoutAlign="end end">
+    <button
+      color="accent"
+      matStepperNext
+      [disabled]="form.invalid"
+      mat-button>
+      SIGUIENTE
+    </button>
+  </div>
+</form>

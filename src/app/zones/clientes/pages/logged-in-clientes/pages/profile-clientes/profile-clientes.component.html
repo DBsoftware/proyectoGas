@@ -1,0 +1,140 @@
+
+<mat-tab-group
+  backgroundColor="primary"
+  color="accent"
+  [selectedIndex]="0"
+  mat-stretch-tabs
+  class="general-card-border mat-elevation-z4">
+  <mat-tab
+    label="Administrar mi perfil">
+    <div fxLayout="row" fxLayoutAlign="start stretch">
+      <form  class="padding25 form-profile" [formGroup]="formProfile">
+        <div
+          fxLayout="row"
+          fxLayoutAlign="center stretch"
+          fxLayoutGap="10px">
+          <mat-form-field
+            class="width-field"
+            appearance="outline">
+            <mat-label>Primer Nombre</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Escribe tu primer nombre"
+              formControlName="nombre"
+              required>
+            <mat-error *ngIf="formProfile.get('nombre').status === 'INVALID'">
+              <app-form-errors
+                errorPrefix="Este campo es requerido"
+                [errors]="formProfile.get('nombre').errors">
+              </app-form-errors>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field
+            class="width-field"
+            appearance="outline">
+            <mat-label>Segundo Nombre</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Escribe tu segundo nombre"
+              formControlName="nombre2">
+            <mat-error *ngIf="formProfile.get('nombre2').status === 'INVALID'">
+              <app-form-errors
+                errorPrefix="Este campo es requerido"
+                [errors]="formProfile.get('nombre2').errors">
+              </app-form-errors>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div
+          fxLayout="row"
+          fxLayoutAlign="center stretch"
+          fxLayoutGap="10px">
+          <mat-form-field
+            appearance="outline">
+            <mat-label>Primer apellido</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Escribe tu primer apellido"
+              formControlName="apellido"
+              required>
+            <mat-error *ngIf="formProfile.get('apellido').status === 'INVALID'">
+              <app-form-errors
+                errorPrefix="Este campo es requerido"
+                [errors]="formProfile.get('apellido').errors">
+              </app-form-errors>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline">
+            <mat-label>Segundo apellido</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Escribe tu segundo apellido"
+              formControlName="apellido2">
+            <mat-error *ngIf="formProfile.get('apellido2').status === 'INVALID'">
+              <app-form-errors
+                errorPrefix="Este campo es requerido"
+                [errors]="formProfile.get('apellido2').errors">
+              </app-form-errors>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Identificación</mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="Escribe tu identificacion"
+            formControlName="identificacion">
+          <mat-error *ngIf="formProfile.get('identificacion').status === 'INVALID'">
+            <app-form-errors
+              errorPrefix="Este campo es requerido"
+              [errors]="formProfile.get('identificacion').errors">
+            </app-form-errors>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            type="email"
+            matInput
+            placeholder="Escribe tu Email"
+            formControlName="email">
+          <mat-error *ngIf="formProfile.get('email').status === 'INVALID'">
+            <app-form-errors
+              errorPrefix="Este campo es requerido"
+              [errors]="formProfile.get('email').errors">
+            </app-form-errors>
+          </mat-error>
+        </mat-form-field>
+        <div
+          fxLayout="row"
+          fxLayoutAlign="space-between center">
+          <button
+            mat-button
+            color="accent"
+            (click)="openChangePassword()"
+            type="button">
+            CAMBIAR CONTRASEÑA
+          </button>
+          <button
+            [disabled]="formProfile.invalid || (_loading.getHTTPStatus() | async)"
+            mat-raised-button
+            color="accent"
+            type="button">
+            GUARDAR CAMBIOS
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </mat-tab>
+  <mat-tab
+    label="Administrar mis códigos de suscripción">
+    <app-datatable [userId]="userId"></app-datatable>
+  </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,352 @@
+
+<div
+  fxLayoutAlign="center start"
+  fxLayout="row">
+  <form
+    fxLayoutGap="10px"
+    fxLayout="column"
+    fxLayoutAlign="center start"
+    class="mat-elevation-z2 padding25 general-card-border"
+    [formGroup]="form">
+    <h1 class="mat-h1">BIO - Residuos especiales y no compactables</h1>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Tipo de naturaleza</mat-label>
+      <mat-select
+        required
+        placeholder="Selecciona un tipo de naturaleza"
+        formControlName="tipo_naturaleza">
+        <mat-option value="">
+          Seleccione una opción
+        </mat-option>
+        <mat-option *ngFor="let option of tipoIdentifacion$ | async"
+                    [value]="option.id">
+          {{  option.description }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('tipo_naturaleza').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Seleccionar un tipo de identificación es requerido"
+          [errors]="form.get('tipo_naturaleza').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Identificación</mat-label>
+      <input
+        required
+        type="text"
+        matInput
+        placeholder="Escribe la identificación"
+        formControlName="identificacion">
+      <mat-error *ngIf="form.get('identificacion').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('identificacion').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <div fxFill
+         fxLayoutGap="6px"
+         fxLayout="row">
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Primer nombre</mat-label>
+        <input
+          required
+          type="text"
+          matInput
+          placeholder="Escribe tu nombre"
+          formControlName="nombre">
+        <mat-error *ngIf="form.get('nombre').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('nombre').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Segundo nombre</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Escribe tu  nombre"
+          formControlName="nombre2">
+        <mat-error *ngIf="form.get('nombre2').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('nombre2').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div
+      fxFill
+      fxLayout="row"
+      fxLayoutGap="6px">
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Primer apellido</mat-label>
+        <input
+          required
+          type="text"
+          matInput
+          placeholder="Escribe tu  apellido"
+          formControlName="apellido">
+        <mat-error *ngIf="form.get('apellido').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('apellido').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Segundo apellido</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Escribe tu segundo apellido"
+          formControlName="apellido2">
+        <mat-error *ngIf="form.get('apellido2').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('apellido2').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Email</mat-label>
+      <input
+        required
+        type="email"
+        matInput
+        placeholder="Escribe tu email"
+        formControlName="email">
+      <mat-error *ngIf="form.get('email').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('email').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Teléfono fijo</mat-label>
+      <input
+        required
+        type="tel"
+        matInput
+        placeholder="Escribe tu teléfono fijo"
+        formControlName="telefono">
+      <mat-error *ngIf="form.get('telefono').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('telefono').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Teléfono celular</mat-label>
+      <input
+        required
+        type="tel"
+        matInput
+        placeholder="Escribe tu telefono"
+        formControlName="celular">
+      <mat-error *ngIf="form.get('celular').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('celular').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-checkbox
+      formControlName="deseo_recibir">
+      Deseo recibir la notificación al correo electrónico
+    </mat-checkbox>
+    <div
+        fxLayoutGap="6px"
+        fxLayoutAlign="start center"
+        fxLayout="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Listado de Servicios</mat-label>
+        <mat-select
+          placeholder="Selecciona un listado de servicios"
+          formControlName="listado_servicios">
+          <mat-option value="">
+            Seleccione una opción
+          </mat-option>
+          <mat-option *ngFor="let option of listServices$ | async"
+                      [value]="option.id">
+            {{  option.unitValue }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('listado_servicios').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('listado_servicios').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Valor unitario</mat-label>
+        <input
+          type="number"
+          matInput
+          placeholder="Escribe el valor unitario"
+          formControlName="valor_unitario">
+        <mat-error *ngIf="form.get('valor_unitario').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('valor_unitario').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Cantidad</mat-label>
+        <input
+          type="number"
+          matInput
+          placeholder="Escribe la cantidad"
+          formControlName="cantidad">
+        <mat-error *ngIf="form.get('cantidad').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('cantidad').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <button
+        class="margin-btn-forms"
+        type="button"
+        (click)="addRow()"
+        [disabled]="form.get('cantidad').invalid || form.get('valor_unitario').invalid || form.get('listado_servicios').invalid"
+        mat-icon-button>
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <div
+      fxFill
+      class="materia-border table-container">
+      <table
+        fxFill
+        mat-table
+        [dataSource]="dataSource">
+        <ng-container
+          matColumnDef="servicio">
+          <th mat-header-cell
+              *matHeaderCellDef>
+            Servicio
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element">
+            {{ element.servicio }}
+          </td>
+        </ng-container>
+        <ng-container
+          matColumnDef="cantidad">
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+            Cantidad
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element">
+            {{ element.cantidad }}
+          </td>
+        </ng-container>
+        <ng-container
+          matColumnDef="valor_unitario">
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+            Valor unitario
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element">
+            ${{ element.valor_unitario }}
+          </td>
+        </ng-container>
+
+        <ng-container
+        matColumnDef="total">
+        <th
+          mat-header-cell
+          *matHeaderCellDef>
+          Total
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element">
+          ${{ element.total }}
+        </td>
+      </ng-container>
+        <ng-container
+          matColumnDef="acciones">
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+          </th>
+          <td
+            fxFill
+            fxLayoutAlign="end center"
+            mat-cell
+            *matCellDef="let element; let i = index">
+              <button
+                matTooltip="Eliminar item"
+                type="button"
+                (click)="removeRow(i)"
+                mat-icon-button>
+                <mat-icon class="color-icon">remove_circle</mat-icon>
+              </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <div
+      fxFill
+      fxLayout="column"
+      fxLayoutGap="12px"
+      fxLayoutAlign="center center">
+      <app-autorizacion-tratamiento
+        (sendIdPolitic)="reciveIdPolitic($event)"
+        fxLayout="column"
+        fxLayoutGap="7px"
+        fxLayoutAlign="center center"
+        [control]="form.get('autorizacion')">
+      </app-autorizacion-tratamiento>
+        <re-captcha
+          formControlName="recaptcha"
+          (resolved)="recaptchaResolved($event)">
+        </re-captcha>
+    </div>
+    <div
+      fxFill
+      class="terms-and-conditions"
+      fxLayout="row"
+      fxLayoutAlign="end end">
+      <button
+        color="accent"
+        mat-raised-button
+        (click)="guardar()"
+        [disabled]="form.invalid || dataSource.data.length === 0 ||  (_loading.getHTTPStatus()  | async)"
+        mat-button>
+        {{ textButton }}
+      </button>
+    </div>
+  </form>
+</div>
+

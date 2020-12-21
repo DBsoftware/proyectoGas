@@ -1,0 +1,57 @@
+<div fxLayout="row"
+     fxLayoutAlign="center center">
+  <div class="mat-elevation-z2 card general-card-border">
+    <h1 class="mat-h1">Consulta duplicado de factura</h1>
+    <form
+      fxLayout="column"
+      fxLayoutAlign="center start"
+      [formGroup]="form">
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Código Cliente</mat-label>
+        <mat-select
+          (selectionChange)="selectionOnchange($event)"
+          required
+          placeholder="Escriba el código del cliente"
+          formControlName="codigo_cliente">
+          <mat-option value="">
+            Seleccione una opción
+          </mat-option>
+          <mat-option
+            *ngFor="let option of tipoSuscripcion$ | async"
+            [value]="option.code">
+            {{ option.code }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('codigo_cliente').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Seleccione un código de cliente"
+            [errors]="form.get('codigo_cliente').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <div
+        fxFill
+        fxLayout="row"
+        fxLayoutAlign="center center">
+        <re-captcha
+          class="re-captcha-class"
+          formControlName="recaptcha"
+          (resolved)="recaptchaResolved($event)">
+        </re-captcha>
+      </div>
+      <div
+        fxFill
+        fxLayout="row"
+        fxLayoutAlign="end center">
+        <!--                  -->
+        <button mat-raised-button
+                [disabled]="form.invalid || formdisable || (_loading.getHTTPStatus() | async )"
+                (click)="consultar()"
+                color="accent">
+          CONSULTAR
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

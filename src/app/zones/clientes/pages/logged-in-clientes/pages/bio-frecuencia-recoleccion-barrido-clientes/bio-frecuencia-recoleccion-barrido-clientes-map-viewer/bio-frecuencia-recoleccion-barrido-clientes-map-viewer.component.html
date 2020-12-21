@@ -1,0 +1,23 @@
+
+      <div
+        *ngIf="coords"
+           class="map-container" #map_container>
+        <agm-map
+          (mapReady)="mapReady($event)"
+          [style.height.px]="map_container.offsetHeight"
+          [latitude]="coords.lat"
+          [longitude]="coords.long">
+          <agm-marker
+            [latitude]="coords.lat"
+            [longitude]="coords.long">
+            <agm-info-window
+              [isOpen]="coords.isOpen"
+              #infoWindow>
+              <h2>{{ coords.frequency }}</h2>
+            <!--  <ul>
+                <li>Horarios: {{ pointMap.address }}</li>
+              </ul> -->
+            </agm-info-window>
+          </agm-marker>
+        </agm-map>
+      </div>

@@ -1,0 +1,210 @@
+
+<div
+  fxLayoutAlign="center start"
+  fxLayout="row">
+  <form
+    fxLayoutGap="10px"
+    fxLayout="column"
+    fxLayoutAlign="center start"
+    class="mat-elevation-z2 padding25 general-card-border"
+    [formGroup]="form">
+    <h1 class="mat-h1">Registro de cuenta colaborador</h1>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Tipo de identificación</mat-label>
+      <mat-select
+        required
+        placeholder="Selecciona un tipo de identificación"
+        formControlName="tipo_identificacion">
+        <mat-option value="">
+          Seleccione una opción
+        </mat-option>
+        <mat-option *ngFor="let option of tipoIdentificacion$ | async"
+                    [value]="option.id">
+          {{  option.description }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('tipo_identificacion').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Seleccionar un tipo de identificación es requerido"
+          [errors]="form.get('tipo_identificacion').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Identificación</mat-label>
+      <input
+        required
+        type="text"
+        matInput
+        placeholder="Escribe la identificación"
+        formControlName="identificacion">
+      <mat-error *ngIf="form.get('identificacion').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('identificacion').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <div fxFill
+         fxLayoutGap="6px"
+         fxLayout="row">
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Primer nombre</mat-label>
+        <input
+          required
+          type="text"
+          matInput
+          placeholder="Escribe tu nombre"
+          formControlName="nombre">
+        <mat-error *ngIf="form.get('nombre').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('nombre').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Segundo nombre</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Escribe tu  nombre"
+          formControlName="nombre2">
+        <mat-error *ngIf="form.get('nombre2').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('nombre2').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div
+      fxFill
+      fxLayout="row"
+      fxLayoutGap="6px">
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Primer apellido</mat-label>
+        <input
+          required
+          type="text"
+          matInput
+          placeholder="Escribe tu  apellido"
+          formControlName="apellido">
+        <mat-error *ngIf="form.get('apellido').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('apellido').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        appearance="outline">
+        <mat-label>Segundo apellido</mat-label>
+        <input
+          required
+          type="text"
+          matInput
+          placeholder="Escribe tu segundo apellido"
+          formControlName="apellido2">
+        <mat-error *ngIf="form.get('apellido2').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="form.get('apellido2').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Email</mat-label>
+      <input
+        required
+        type="email"
+        matInput
+        placeholder="Escribe tu email"
+        formControlName="email">
+      <mat-error *ngIf="form.get('email').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('email').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Teléfono fijo</mat-label>
+      <input
+        type="tel"
+        matInput
+        placeholder="Escribe tu teléfono fijo"
+        formControlName="telefono">
+      <mat-error *ngIf="form.get('telefono').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('telefono').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline">
+      <mat-label>Teléfono celular</mat-label>
+      <input
+        type="tel"
+        matInput
+        placeholder="Escribe tu celular"
+        formControlName="celular">
+      <mat-error *ngIf="form.get('celular').status === 'INVALID'">
+        <app-form-errors
+          errorPrefix="Este campo es requerido"
+          [errors]="form.get('celular').errors">
+        </app-form-errors>
+      </mat-error>
+    </mat-form-field>
+    <div
+      fxFill
+      fxLayout="column"
+      fxLayoutGap="12px"
+      fxLayoutAlign="center center">
+        <app-autorizacion-tratamiento
+          (sendIdTratamiento)="reciveIdTratamiento($event)"
+          (sendIdPolitic)="reciveIdPolitic($event)"
+          fxLayout="column"
+          fxLayoutGap="7px"
+          fxLayoutAlign="center center"
+          [control]="form.get('autorizacion')">
+        </app-autorizacion-tratamiento>
+        <re-captcha
+          formControlName="recaptcha"
+          (resolved)="recaptchaResolved($event)">
+        </re-captcha>
+    </div>
+    <div
+      fxFill
+      class="terms-and-conditions"
+      fxLayout="row"
+      fxLayoutAlign="space-between center">
+      <button
+        type="button"
+        (click)="goBack()"
+        color="accent"
+        [disabled]="(_loadingService.getHTTPStatus() | async)"
+        mat-button>
+        Prefiero iniciar sesión
+      </button>
+      <button
+        color="accent"
+        mat-raised-button
+        (click)="guardar()"
+        [disabled]="form.invalid || (_loadingService.getHTTPStatus() | async)"
+        mat-button>
+          REGISTRAR
+      </button>
+    </div>
+  </form>
+</div>
+

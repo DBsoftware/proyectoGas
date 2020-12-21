@@ -1,0 +1,110 @@
+<div
+  class="vh-cien-calc"
+  fxLayoutAlign="center center"
+  fxLayout="row">
+  <div
+    class="mat-elevation-z2
+     card-recaudadores
+    general-card-border">
+    <h1 class="mat-h1">Recaudadores</h1>
+    <form
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      fxLayoutGap="20px"
+      [formGroup]="formRecaudadores">
+      <mat-form-field appearance="outline">
+        <mat-label>Categoría</mat-label>
+        <mat-select
+          formControlName="categoria"
+          type="text"
+          matInput>
+          <mat-option
+            (click)="selectedCategoria(option)"
+            *ngFor="let option of categoriaSelect$ | async" [value]="option.description">
+            {{ option.description }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formRecaudadores.get('categoria').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="formRecaudadores.get('categoria').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Municipio</mat-label>
+        <input
+          (blur)="checkInput($event, 'municipio')"
+          formControlName="municipio"
+          type="text"
+          matInput
+          [matAutocomplete]="municipioAuto"
+          placeholder="Escriba el municipio">
+        <mat-autocomplete
+          #municipioAuto="matAutocomplete">
+          <mat-option
+            (click)="selectedMunicipio(option)"
+            *ngFor="let option of filteredMunicipio$ | async"
+            [value]="option.description">
+            {{option.description }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="formRecaudadores.get('municipio').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="formRecaudadores.get('municipio').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Entidad</mat-label>
+        <input
+          (blur)="checkInput($event, 'entidad')"
+          formControlName="entidad"
+          type="text"
+          matInput
+          [matAutocomplete]="entidadAuto"
+          placeholder="Escriba la entidad">
+        <mat-autocomplete
+          panelWidth="270px"
+          #entidadAuto="matAutocomplete">
+          <mat-option
+            (click)="selectedEntidad(option)"
+            *ngFor="let option of filteredEntidad$ | async"
+            [value]="option.description">
+            {{ option.description }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="formRecaudadores.get('entidad').status === 'INVALID'">
+          <app-form-errors
+            errorPrefix="Este campo es requerido"
+            [errors]="formRecaudadores.get('entidad').errors">
+          </app-form-errors>
+        </mat-error>
+      </mat-form-field>
+      <div
+        fxFlexAlign="start"
+        [matTooltipDisabled]="!(formRecaudadores.value.categoria === '' && formRecaudadores.value.municipio === '' && formRecaudadores.value.entidad === '')"
+        matTooltip="Debes buscar por lo menos un campo para poder consultar los recaudadores">
+        <button
+          class="margin-button"
+          #button
+          (click)="consultar()"
+          color="accent"
+          [disabled]="(((formRecaudadores.value.categoria === '' || metaDataMap?.categoriaId === 404) && (formRecaudadores?.value.municipio === '' || metaDataMap?.municipioId === 404) && ( formRecaudadores?.value.entidad === '' || metaDataMap?.entidadId === 404)) || formRecaudadores.invalid )"
+          mat-raised-button>CONSULTAR</button>
+      </div>
+    </form>
+    <app-recaudadores-clientes-map-viewer
+      [mapData]="mapData">
+    </app-recaudadores-clientes-map-viewer>
+    <app-recaudadores-clientes-datatable
+      [metaDataMap]="metaDataMap"
+      (cordenadas)="sendToMap($event)"
+      *ngIf="dataToDatatable"
+      [dataDatable]="dataToDatatable">
+    </app-recaudadores-clientes-datatable>
+
+  </div>
+
+</div>

@@ -1,0 +1,10 @@
+@import "~@angular/material/theming";
+
+@mixin general-card-style($theme) {
+  $background: map-get($theme, background);
+  .general-card-border {
+    border-radius: 8px;
+    box-sizing: border-box;
+    background-color: mat-color($background, card);
+  }
+}

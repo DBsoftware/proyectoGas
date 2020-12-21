@@ -1,0 +1,12 @@
+@import "~@angular/material/theming";
+
+@mixin documentacion-adjunta-registro-proveedores($theme) {
+  $foreground: map-get($theme, foreground);
+  .a-download {
+    color: mat-color($foreground, text);
+  }
+  .a-download:hover {
+    color: mat-color($foreground, hint-text);
+    text-decoration: underline;
+  }
+}
